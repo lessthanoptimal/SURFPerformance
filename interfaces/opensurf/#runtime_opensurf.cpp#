@@ -1,0 +1,21 @@
+        sprintf(filename,"%s/DETECTED_img%d_%s.txt",nameDirectory,imageNumber,nameDetected);
+        FILE *fid = fopen(filename,"r");
+        if( fid == NULL ) {
+            fprintf(stderr,"Couldn't open file: %s\n",filename);
+            throw std::runtime_error("Failed to open");
+        }
+        sprintf(filename,"%s/img%d.pgm",nameDirectory,imageNumber);
+        ImLoad ImageLoader;
+        Image *img=ImageLoader.readImage(filename);
+        if( img == NULL ) {
+            fprintf(stderr,"Couldn't open image file: %s\n",filename);
+            throw std::runtime_error("Failed to open");
+        }
+
+        printf("Processing %s\n",filename);
+        process(img,fid);
+
+        fclose(fid);
+
+
+}

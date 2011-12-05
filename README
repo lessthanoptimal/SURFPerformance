@@ -1,0 +1,8 @@
+Benchmark for evaluating SURF libraries by Peter Abeles.
+
+Evaluates detection stability, description stability, detection runtime, description runtime, and overall runtime.
+
+http://www.boofcv.org/index.php?title=Performance:SURF
+
+
+All code is released under a BSD 2.0 license.

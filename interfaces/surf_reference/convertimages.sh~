@@ -1,0 +1,5 @@
+#/bin/sh
+for A in *.png; do
+base='basename $A .png`
+convert "$A" "$base.pgm"
+done
