@@ -5,4 +5,14 @@ Evaluates detection stability, description stability, detection runtime, descrip
 http://www.boofcv.org/index.php?title=Performance:SURF
 
 
+Directory Descriptions:
+
+interfaces/  Where applications are stored for computing results from 3rd party libraries
+src/ Benchmark source code
+data/ Where benchmark data is stored.
+
+
+All thirdparty data and libraries must be downloaded from their respective sites
+
+
 All code is released under a BSD 2.0 license.

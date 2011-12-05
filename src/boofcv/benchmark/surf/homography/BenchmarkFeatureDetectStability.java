@@ -284,14 +284,14 @@ public class BenchmarkFeatureDetectStability {
 
 		BenchmarkFeatureDetectStability app = new BenchmarkFeatureDetectStability(assoc,".png",tolerance);
 
-		app.addDirectory("data/mikolajczk/bikes/");
-		app.addDirectory("data/mikolajczk/boat/");
-		app.addDirectory("data/mikolajczk/graf/");
-		app.addDirectory("data/mikolajczk/leuven/");
-		app.addDirectory("data/mikolajczk/ubc/");
-		app.addDirectory("data/mikolajczk/trees/");
-		app.addDirectory("data/mikolajczk/wall/");
-		app.addDirectory("data/mikolajczk/bark/");
+		app.addDirectory("data/bikes/");
+		app.addDirectory("data/boat/");
+		app.addDirectory("data/graf/");
+		app.addDirectory("data/leuven/");
+		app.addDirectory("data/ubc/");
+		app.addDirectory("data/trees/");
+		app.addDirectory("data/wall/");
+		app.addDirectory("data/bark/");
 
 		app.evaluate("FH");
 		app.evaluate("PanOMatic");

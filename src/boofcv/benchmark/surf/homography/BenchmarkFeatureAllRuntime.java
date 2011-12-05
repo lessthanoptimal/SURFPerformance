@@ -107,6 +107,6 @@ public class BenchmarkFeatureAllRuntime<T extends ImageBase> {
 		BenchmarkFeatureAllRuntime<ImageFloat32> benchmark =
 				new BenchmarkFeatureAllRuntime<ImageFloat32>(ImageFloat32.class,detectAlg,describeAlg);
 
-		benchmark.benchmark("../evaluation/data/mikolajczk/boat", 1);
+		benchmark.benchmark("data/boat", 1);
 	}
 }
