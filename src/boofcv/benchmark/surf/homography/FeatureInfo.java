@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package boofcv.benchmark.feature.homography;
+package boofcv.benchmark.surf.homography;
 
 import boofcv.struct.feature.TupleDesc_F64;
 import georegression.struct.point.Point2D_F64;

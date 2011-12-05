@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package boofcv.benchmark.feature.homography;
+package boofcv.benchmark.surf.homography;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.alg.feature.orientation.OrientationImage;
