@@ -27,6 +27,7 @@ import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.ImageSingleBand;
 import georegression.struct.point.Point2D_F64;
 
 import javax.imageio.ImageIO;
@@ -39,7 +40,7 @@ import java.io.IOException;
  *
  * @author Peter Abeles
  */
-public class BenchmarkFeatureAllRuntime<T extends ImageBase> {
+public class BenchmarkFeatureAllRuntime<T extends ImageSingleBand> {
 
 	Class<T> imageType;
 	InterestPointDetector<T> detectAlg;
@@ -60,7 +61,7 @@ public class BenchmarkFeatureAllRuntime<T extends ImageBase> {
 
 		BufferedImage image = ImageIO.read(new File(imageName));
 
-		T input = ConvertBufferedImage.convertFrom(image, null, imageType);
+		T input = ConvertBufferedImage.convertFromSingle(image, null, imageType);
 
 		long best = Long.MAX_VALUE;
 

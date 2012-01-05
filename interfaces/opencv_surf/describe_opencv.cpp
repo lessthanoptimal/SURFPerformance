@@ -19,7 +19,11 @@ void process( Mat image , FILE *fid , FILE *output)
     std::vector<KeyPoint> ipts;
 
     // adjust threshold so that it detects about the same number of features
-    SurfFeatureDetector detector(250,4,4,false);
+    // Target is 6334 in graf img1   actual 5652
+    //           3979 in bark img1   actual 4125
+    //           6345 in leuven img1 actual 6370
+    //           6655 in boat img1   actual 7942
+    SurfFeatureDetector detector(80,4,4,false);
 
     // read in location of points
 //    while( true ) {

@@ -25,6 +25,8 @@ import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageUInt8;
 import georegression.struct.point.Point2D_F64;
 
 import java.awt.image.BufferedImage;
@@ -40,7 +42,8 @@ import java.io.PrintStream;
  *
  * @author Peter Abeles
  */
-public class CreateDetectionFile<T extends ImageBase> {
+@SuppressWarnings("unchecked")
+public class CreateDetectionFile<T extends ImageSingleBand> {
 
 	// algorithm that detects the features
 	InterestPointDetector<T> alg;
@@ -106,7 +109,7 @@ public class CreateDetectionFile<T extends ImageBase> {
 	 * @throws FileNotFoundException
 	 */
 	public void process( BufferedImage input , String outputName ) throws FileNotFoundException {
-		T image = ConvertBufferedImage.convertFrom(input,null,imageType);
+		T image = ConvertBufferedImage.convertFromSingle(input, null, imageType);
 
 		alg.detect(image);
 		if( orientation != null)
@@ -128,26 +131,28 @@ public class CreateDetectionFile<T extends ImageBase> {
 		out.close();
 	}
 
-	public static <T extends ImageBase>
+	public static <T extends ImageSingleBand>
 	void doStuff( String directory , String suffix , Class<T> imageType ) throws FileNotFoundException {
 		// below are the settings used for detect stability test
 //		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(0, 2, -1, 1, 9,4,4);
 		// below is the settings used for describe stability test
-		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(80, 1, -1, 1, 9, 4, 4);
+		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(3, 1, -1, 1, 9, 4, 4);
 
 		CreateDetectionFile<T> cdf = new CreateDetectionFile<T>(alg,null,imageType,"FH");
 		cdf.directory(directory,suffix);
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {
-		doStuff("data/mikolajczk/bikes/",".png",ImageFloat32.class);
-		doStuff("data/mikolajczk/boat/",".png",ImageFloat32.class);
-		doStuff("data/mikolajczk/graf/",".png",ImageFloat32.class);
-		doStuff("data/mikolajczk/leuven/",".png",ImageFloat32.class);
-		doStuff("data/mikolajczk/ubc/",".png",ImageFloat32.class);
-		doStuff("data/mikolajczk/trees/",".png",ImageFloat32.class);
-		doStuff("data/mikolajczk/wall/",".png",ImageFloat32.class);
-		doStuff("data/mikolajczk/bark/",".png",ImageFloat32.class);
+		Class imageType = ImageFloat32.class;
+		
+		doStuff("data/bikes/",".png",imageType);
+		doStuff("data/boat/",".png",imageType);
+		doStuff("data/graf/",".png",imageType);
+		doStuff("data/leuven/",".png",imageType);
+		doStuff("data/ubc/",".png",imageType);
+		doStuff("data/trees/",".png",imageType);
+		doStuff("data/wall/",".png",imageType);
+		doStuff("data/bark/",".png",imageType);
 	}
 
 }

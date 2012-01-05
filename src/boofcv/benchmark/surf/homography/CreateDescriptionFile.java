@@ -27,6 +27,7 @@ import boofcv.io.image.UtilImageIO;
 import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.ImageSingleBand;
 import georegression.struct.point.Point2D_F64;
 
 import java.awt.image.BufferedImage;
@@ -43,7 +44,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class CreateDescriptionFile<T extends ImageBase> {
+public class CreateDescriptionFile<T extends ImageSingleBand> {
 
 	// algorithm that detects the features
 	DescribeRegionPoint<T> alg;
@@ -120,7 +121,7 @@ public class CreateDescriptionFile<T extends ImageBase> {
 	 * @throws FileNotFoundException
 	 */
 	public void process( BufferedImage input , String detectionName , String outputName ) throws FileNotFoundException {
-		T image = ConvertBufferedImage.convertFrom(input,null,imageType);
+		T image = ConvertBufferedImage.convertFromSingle(input,null,imageType);
 
 		alg.setImage(image);
 		orientation.setImage(image);
@@ -156,7 +157,7 @@ public class CreateDescriptionFile<T extends ImageBase> {
 		return alg.process(x,y,theta,scale,null);
 	}
 
-	public static <T extends ImageBase>
+	public static <T extends ImageSingleBand>
 	void doStuff( String directory , String imageSuffix , Class<T> imageType ) throws FileNotFoundException {
 //		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.surf(true,imageType);
 		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.surfm(true, imageType);
@@ -186,13 +187,13 @@ public class CreateDescriptionFile<T extends ImageBase> {
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {
-		doStuff("data/mikolajczk/bikes/",".png",ImageFloat32.class);
-		doStuff("data/mikolajczk/boat/",".png",ImageFloat32.class);
-		doStuff("data/mikolajczk/graf/",".png",ImageFloat32.class);
-		doStuff("data/mikolajczk/leuven/",".png",ImageFloat32.class);
-		doStuff("data/mikolajczk/ubc/",".png",ImageFloat32.class);
-		doStuff("data/mikolajczk/trees/",".png",ImageFloat32.class);
-		doStuff("data/mikolajczk/wall/",".png",ImageFloat32.class);
-		doStuff("data/mikolajczk/bark/",".png",ImageFloat32.class);
+		doStuff("data/bikes/",".png",ImageFloat32.class);
+		doStuff("data/boat/",".png",ImageFloat32.class);
+		doStuff("data/graf/",".png",ImageFloat32.class);
+		doStuff("data/leuven/",".png",ImageFloat32.class);
+		doStuff("data/ubc/",".png",ImageFloat32.class);
+		doStuff("data/trees/",".png",ImageFloat32.class);
+		doStuff("data/wall/",".png",ImageFloat32.class);
+		doStuff("data/bark/",".png",ImageFloat32.class);
 	}
 }

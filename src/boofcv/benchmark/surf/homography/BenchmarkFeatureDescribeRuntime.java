@@ -25,6 +25,7 @@ import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.ImageSingleBand;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -37,7 +38,7 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class BenchmarkFeatureDescribeRuntime<T extends ImageBase> {
+public class BenchmarkFeatureDescribeRuntime<T extends ImageSingleBand> {
 
 	Class<T> imageType;
 	DescribeRegionPoint<T> alg;
@@ -55,7 +56,7 @@ public class BenchmarkFeatureDescribeRuntime<T extends ImageBase> {
 
 		BufferedImage image = ImageIO.read(new File(imageName));
 
-		T input = ConvertBufferedImage.convertFrom(image,null,imageType);
+		T input = ConvertBufferedImage.convertFromSingle(image,null,imageType);
 
 		List<DetectionInfo> detections = LoadBenchmarkFiles.loadDetection(detectName);
 

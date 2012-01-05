@@ -1,10 +1,12 @@
 #/bin/bash
 
-"$1" ~/projects/boofcv/evaluation/data/mikolajczk/bark "$2"
-"$1" ~/projects/boofcv/evaluation/data/mikolajczk/bikes "$2"
-"$1" ~/projects/boofcv/evaluation/data/mikolajczk/boat "$2"
-"$1" ~/projects/boofcv/evaluation/data/mikolajczk/graf "$2"
-"$1" ~/projects/boofcv/evaluation/data/mikolajczk/leuven "$2"
-"$1" ~/projects/boofcv/evaluation/data/mikolajczk/trees "$2"
-"$1" ~/projects/boofcv/evaluation/data/mikolajczk/ubc "$2"
-"$1" ~/projects/boofcv/evaluation/data/mikolajczk/wall "$2"
+H="../.."
+
+"$1" $H/data/bark "$2"
+"$1" $H/data/bikes "$2"
+"$1" $H/data/boat "$2"
+"$1" $H/data/graf "$2"
+"$1" $H/data/leuven "$2"
+"$1" $H/data/trees "$2"
+"$1" $H/data/ubc "$2"
+"$1" $H/data/wall "$2"

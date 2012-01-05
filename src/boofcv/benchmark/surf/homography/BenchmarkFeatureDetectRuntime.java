@@ -24,6 +24,7 @@ import boofcv.core.image.ConvertBufferedImage;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.ImageSingleBand;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -35,7 +36,7 @@ import java.io.IOException;
  *
  * @author Peter Abeles
  */
-public class BenchmarkFeatureDetectRuntime<T extends ImageBase> {
+public class BenchmarkFeatureDetectRuntime<T extends ImageSingleBand> {
 
 	Class<T> imageType;
 	InterestPointDetector<T> alg;
@@ -52,7 +53,7 @@ public class BenchmarkFeatureDetectRuntime<T extends ImageBase> {
 
 		BufferedImage image = ImageIO.read(new File(imageName));
 
-		T input = ConvertBufferedImage.convertFrom(image, null, imageType);
+		T input = ConvertBufferedImage.convertFromSingle(image, null, imageType);
 
 		long best = Long.MAX_VALUE;
 
