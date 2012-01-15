@@ -28,6 +28,7 @@ import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageUInt8;
 import georegression.struct.point.Point2D_F64;
 
 import java.awt.image.BufferedImage;
@@ -159,8 +160,8 @@ public class CreateDescriptionFile<T extends ImageSingleBand> {
 
 	public static <T extends ImageSingleBand>
 	void doStuff( String directory , String imageSuffix , Class<T> imageType ) throws FileNotFoundException {
-//		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.surf(true,imageType);
-		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.surfm(true, imageType);
+		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.surf(true,imageType);
+//		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.surfm(true, imageType);
 
 //		int radius = 12;
 //		int numAngles = 8;
@@ -178,22 +179,24 @@ public class CreateDescriptionFile<T extends ImageSingleBand> {
 		OrientationImage<T> orientation = FactoryOrientationAlgs.nogradient(alg.getCanonicalRadius(),imageType);
 //		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"SAMPLEDIFF");
 //		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"SAMPLE");
-//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"BoofCV_SURF");
-		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"BoofCV_MSURF");
+		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"BoofCV_SURF");
+//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"BoofCV_MSURF");
 //		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"BRIEFO");
 //		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"BRIEF");
 //		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"NEW");
-		cdf.directory(directory,imageSuffix,"FH.txt");
+		cdf.directory(directory,imageSuffix,"SURF.txt");
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {
-		doStuff("data/bikes/",".png",ImageFloat32.class);
-		doStuff("data/boat/",".png",ImageFloat32.class);
-		doStuff("data/graf/",".png",ImageFloat32.class);
-		doStuff("data/leuven/",".png",ImageFloat32.class);
-		doStuff("data/ubc/",".png",ImageFloat32.class);
-		doStuff("data/trees/",".png",ImageFloat32.class);
-		doStuff("data/wall/",".png",ImageFloat32.class);
-		doStuff("data/bark/",".png",ImageFloat32.class);
+		Class type = ImageFloat32.class;
+
+		doStuff("data/bikes/",".png",type);
+		doStuff("data/boat/",".png",type);
+		doStuff("data/graf/",".png",type);
+		doStuff("data/leuven/",".png",type);
+		doStuff("data/ubc/",".png",type);
+		doStuff("data/trees/",".png",type);
+		doStuff("data/wall/",".png",type);
+		doStuff("data/bark/",".png",type);
 	}
 }

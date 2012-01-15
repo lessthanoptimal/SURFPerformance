@@ -269,11 +269,11 @@ public class BenchmarkFeatureDescribeStability {
 //		app.evaluate("PanOMatic.txt");
 //		app.evaluate("JOpenSURF.txt");
 //		app.evaluate("OpenSURF.txt");
-		app.evaluate("OpenCV_SURF.txt");
+//		app.evaluate("OpenCV_SURF.txt");
 //		app.evaluate("BRIEFO.txt");
 //		app.evaluate("BRIEF.txt");
-//		app.evaluate("BoofCV_SURF.txt");
-//		app.evaluate("BoofCV_MSURF.txt");
+		app.evaluate("BoofCV_SURF.txt");
+		app.evaluate("BoofCV_MSURF.txt");
 
 	}
 }

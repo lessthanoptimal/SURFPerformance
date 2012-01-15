@@ -35,6 +35,8 @@ public class CreateDescriptor {
 	{
 		List<SURFInterestPoint> points = loadInterestPoints(detectName);
 
+		System.out.printf("Processing %5d %s\n",points.size(),detectName);
+
 		// Compute descriptors for each point
 		Surf surf = new Surf(image,0.81F, 0.0004F, 4);
 
@@ -61,7 +63,7 @@ public class CreateDescriptor {
 	}
 
 	private static void processDirectory( String nameDirectory ) throws IOException {
-		String nameDetected = "FH";
+		String nameDetected = "SURF";
 
 		for( int i = 1; i <= 6; i++ ) {
 			String detectName = String.format("%s/DETECTED_img%d_%s.txt",nameDirectory,i,nameDetected);
@@ -71,7 +73,6 @@ public class CreateDescriptor {
 
 			String describeName = String.format("%s/DESCRIBE_img%d_%s.txt",nameDirectory,i,"JOpenSURF");
 
-			System.out.println("Processing "+describeName);
 			process(img, detectName, describeName);
 
 		}

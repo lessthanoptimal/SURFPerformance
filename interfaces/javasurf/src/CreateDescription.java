@@ -35,6 +35,8 @@ public class CreateDescription {
 	{
 		ArrayList<InterestPoint> points = loadInterestPoints(image,detectName);
 
+		System.out.printf("Processing %5d %s\n",points.size(),detectName);
+		
 		// Compute descriptors for each point
 		ISURFfactory mySURF = SURF.createInstance(image, 0.9f, 800, 4, image);
 
@@ -64,7 +66,7 @@ public class CreateDescription {
 	}
 
 	private static void processDirectory( String nameDirectory ) throws IOException {
-		String nameDetected = "FH";
+		String nameDetected = "SURF";
 
 		for( int i = 1; i <= 6; i++ ) {
 			String detectName = String.format("%s/DETECTED_img%d_%s.txt",nameDirectory,i,nameDetected);
@@ -74,7 +76,6 @@ public class CreateDescription {
 
 			String describeName = String.format("%s/DESCRIBE_img%d_%s.txt",nameDirectory,i,"JavaSURF");
 
-			System.out.println("Processing "+describeName);
 			process(img, detectName, describeName);
 
 		}
@@ -82,13 +83,13 @@ public class CreateDescription {
 
 	public static void main( String args[] ) throws IOException {
 		processDirectory("../../data/bark");
-		processDirectory("../../data/bikes");
-		processDirectory("../../data/boat");
-		processDirectory("../../data/graf");
-		processDirectory("../../data/leuven");
-		processDirectory("../../data/trees");
-		processDirectory("../../data/ubc");
-		processDirectory("../../data/wall");
+//		processDirectory("../../data/bikes");
+//		processDirectory("../../data/boat");
+//		processDirectory("../../data/graf");
+//		processDirectory("../../data/leuven");
+//		processDirectory("../../data/trees");
+//		processDirectory("../../data/ubc");
+//		processDirectory("../../data/wall");
 	}
 
 }

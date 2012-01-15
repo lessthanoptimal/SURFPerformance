@@ -22,7 +22,10 @@ void process( Image *image , FILE *output)
 
     // detect the features
     std::vector<Ipoint> ipts;
-    FastHessian detector(&iimage,ipts,6.5,false,9,1,4);
+    // parameters used to generate detections for descriptor evaluation
+    FastHessian detector(&iimage,ipts,0.6,false,9,1,4);
+    // parameters used for stability benchmark
+    //FastHessian detector(&iimage,ipts,6.5,false,9,1,4);
     detector.getInterestPoints();
 
     // save detected points to a file
