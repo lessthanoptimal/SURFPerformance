@@ -12,9 +12,18 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/BoofCV.jar!/" />
+          <root url="file://$MODULE_DIR$/../boofcv/main" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../boofcv/main/feature/src" />
+          <root url="file://$MODULE_DIR$/../boofcv/main/geo/src" />
+          <root url="file://$MODULE_DIR$/../boofcv/main/io/src" />
+          <root url="file://$MODULE_DIR$/../boofcv/main/ip/src" />
+          <root url="file://$MODULE_DIR$/../boofcv/main/numerics/src" />
+          <root url="file://$MODULE_DIR$/../boofcv/main/visualize/src" />
+          <root url="file://$MODULE_DIR$/../boofcv/main/calibration/src" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">

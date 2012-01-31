@@ -20,8 +20,10 @@ package boofcv.benchmark.surf.homography;
 
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.alg.feature.orientation.OrientationImage;
+import boofcv.alg.feature.orientation.OrientationIntegral;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
+import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageFloat32;
@@ -134,9 +136,10 @@ public class CreateDetectionFile<T extends ImageSingleBand> {
 	public static <T extends ImageSingleBand>
 	void doStuff( String directory , String suffix , Class<T> imageType ) throws FileNotFoundException {
 		// below are the settings used for detect stability test
-//		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(0, 2, -1, 1, 9,4,4);
+		// graf image 1 with 2000 features
+		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(80, 1, -1, 1, 9,4,4);
 		// below is the settings used for describe stability test
-		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(3, 1, -1, 1, 9, 4, 4);
+//		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(3, 1, -1, 1, 9, 4, 4);
 
 		CreateDetectionFile<T> cdf = new CreateDetectionFile<T>(alg,null,imageType,"FH");
 		cdf.directory(directory,suffix);

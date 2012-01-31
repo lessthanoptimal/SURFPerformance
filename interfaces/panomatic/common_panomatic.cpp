@@ -43,6 +43,7 @@ std::vector<libsurf::KeyPoint *> loadKeyPoint( FILE *fid ) {
             break;
 
         libsurf::KeyPoint *p = new libsurf::KeyPoint(x,y,scale,1000,200);
+	p->_ori = yaw;
         list.push_back(p);
     }
 

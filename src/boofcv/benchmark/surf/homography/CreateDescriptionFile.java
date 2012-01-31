@@ -19,8 +19,14 @@
 package boofcv.benchmark.surf.homography;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
+import boofcv.abst.feature.describe.WrapDescribeSurf;
+import boofcv.alg.feature.describe.DescribePointSurf;
 import boofcv.alg.feature.orientation.OrientationImage;
+import boofcv.alg.feature.orientation.OrientationIntegral;
+import boofcv.alg.transform.ii.GIntegralImageOps;
+import boofcv.benchmark.surf.DescribePointSurfPanOMatic;
 import boofcv.core.image.ConvertBufferedImage;
+import boofcv.factory.feature.describe.FactoryDescribePointAlgs;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.io.image.UtilImageIO;
@@ -49,8 +55,6 @@ public class CreateDescriptionFile<T extends ImageSingleBand> {
 
 	// algorithm that detects the features
 	DescribeRegionPoint<T> alg;
-	// estimates the feature's orientation
-	OrientationImage<T> orientation;
 	// type of input image
 	Class<T> imageType;
 	// name of the description
@@ -60,16 +64,13 @@ public class CreateDescriptionFile<T extends ImageSingleBand> {
 	 * Defines the set of images and detection files that are to be processed.
 	 *
 	 * @param alg Algorithm which creates a description for the feature.
-	 * @param orientation Algorithm which estimates the orientation.
 	 * @param imageType Type of input file.
 	 * @param descriptionName The name of the description algorithm.  This name is appended to output files.
 	 */
 	public CreateDescriptionFile(DescribeRegionPoint<T> alg,
-								 OrientationImage<T> orientation ,
 								 Class<T> imageType,
 								 String descriptionName ) {
 		this.alg = alg;
-		this.orientation = orientation;
 		this.imageType = imageType;
 		this.descriptionName = descriptionName;
 	}
@@ -125,7 +126,6 @@ public class CreateDescriptionFile<T extends ImageSingleBand> {
 		T image = ConvertBufferedImage.convertFromSingle(input,null,imageType);
 
 		alg.setImage(image);
-		orientation.setImage(image);
 
 		List<DetectionInfo> detections = LoadBenchmarkFiles.loadDetection(detectionName);
 
@@ -135,15 +135,10 @@ public class CreateDescriptionFile<T extends ImageSingleBand> {
 		out.printf("%d\n",alg.getDescriptionLength());
 		for( DetectionInfo d : detections  ) {
 			Point2D_F64 p = d.location;
-			double theta=0;
-			if( alg.requiresOrientation() ) {
-				orientation.setScale(d.scale);
-				theta = orientation.compute(p.x,p.y);
-			}
-			TupleDesc_F64 desc = process(p.x, p.y, theta, d.scale);
+			TupleDesc_F64 desc = process(p.x, p.y, d.yaw, d.scale);
 			if( desc != null ) {
 				// save the location and tuple description
-				out.printf("%.3f %.3f %f",p.getX(),p.getY(),theta);
+				out.printf("%.3f %.3f %f",p.getX(),p.getY(),d.yaw);
 				for( int i = 0; i < desc.value.length; i++ ) {
 					out.printf(" %.10f",desc.value[i]);
 				}
@@ -158,10 +153,27 @@ public class CreateDescriptionFile<T extends ImageSingleBand> {
 		return alg.process(x,y,theta,scale,null);
 	}
 
+	/**
+	 * Java port of Pan-o-Matic's descriptor to make examing its behavior easier.
+	 */
+	public static <T extends ImageSingleBand, II extends ImageSingleBand>
+	DescribeRegionPoint<T> surfPanOMaticInBoofCV(boolean isOriented, Class<T> imageType) {
+		OrientationIntegral<II> orientation = null;
+
+		Class<II> integralType = GIntegralImageOps.getIntegralType(imageType);
+
+		if( isOriented )
+			orientation = FactoryOrientationAlgs.sliding_ii(0.65, Math.PI/3.0,8,-1, 6, integralType);
+
+		DescribePointSurf<II> alg = new DescribePointSurfPanOMatic<II>(integralType);
+		return new WrapDescribeSurf<T,II>( alg ,orientation);
+	}
+
 	public static <T extends ImageSingleBand>
 	void doStuff( String directory , String imageSuffix , Class<T> imageType ) throws FileNotFoundException {
-		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.surf(true,imageType);
-//		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.surfm(true, imageType);
+//		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.surf(true,imageType);
+		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.surfm(true, imageType);
+//		DescribeRegionPoint<T> alg = surfPanOMaticInBoofCV(true,imageType);
 
 //		int radius = 12;
 //		int numAngles = 8;
@@ -176,14 +188,13 @@ public class CreateDescriptionFile<T extends ImageSingleBand> {
 //		DescribeRegionPoint<T> alg = DescribePointSamples.create(imageType);
 //		DescribeRegionPoint<T> alg = DescribeSampleDifference.create(imageType);
 
-		OrientationImage<T> orientation = FactoryOrientationAlgs.nogradient(alg.getCanonicalRadius(),imageType);
-//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"SAMPLEDIFF");
-//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"SAMPLE");
-		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"BoofCV_SURF");
-//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"BoofCV_MSURF");
-//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"BRIEFO");
-//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"BRIEF");
-//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,orientation,imageType,"NEW");
+//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"SAMPLEDIFF");
+//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"SAMPLE");
+//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"BoofCV_SURF");
+		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"BoofCV_MSURF");
+//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"BRIEFO");
+//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"BRIEF");
+//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"NEW");
 		cdf.directory(directory,imageSuffix,"SURF.txt");
 	}
 

@@ -32,7 +32,7 @@ public class BenchmarkAllRuntime {
 
 			// caches result, need to declare Surf here
 			IntegralImage ii = new IntegralImage(image);
-			FastHessian detector = new FastHessian(ii,4,1,0.000119F, 0.81F);
+			FastHessian detector = new FastHessian(ii,4,1,0.0008f, 0.81F);
 			List<SURFInterestPoint> found = detector.getIPoints();
 
 			for( SURFInterestPoint p : found ) {
@@ -54,6 +54,6 @@ public class BenchmarkAllRuntime {
 	}
 
 	public static void main( String args[] ) throws IOException {
-		benchmark("../../../data/mikolajczk/boat",1);
+		benchmark("../../data/graf",1);
 	}
 }

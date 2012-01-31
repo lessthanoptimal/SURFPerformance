@@ -25,7 +25,7 @@ void process( libsurf::Image *image )
         KeyPointDetector detector;
         detector.setMaxOctaves(4);
         detector.setMaxScales(4);
-        detector.setScoreThreshold(700000);
+        detector.setScoreThreshold(380000);
 
         // detect interest points in the image
         KeyPointVectInsertor insertor(ipts);

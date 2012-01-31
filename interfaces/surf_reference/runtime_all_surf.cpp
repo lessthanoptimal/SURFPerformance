@@ -34,7 +34,7 @@ void process( Image *image )
 
         // detect
         std::vector<Ipoint> ipts;
-        FastHessian detector(&iimage,ipts,12.7,false,9,1,4);
+        FastHessian detector(&iimage,ipts,6.5,false,9,1,4);
         detector.getInterestPoints();
 
         // describe

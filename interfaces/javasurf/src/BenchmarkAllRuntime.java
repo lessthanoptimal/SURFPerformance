@@ -27,7 +27,7 @@ public class BenchmarkAllRuntime {
 			long before = System.currentTimeMillis();
 
 			// Compute descriptors for each point
-			ISURFfactory mySURF = SURF.createInstance(image, 0.81f, 638, 4, image);
+			ISURFfactory mySURF = SURF.createInstance(image,  0.9f, 520f, 4, image);
 
 			// detect interest points
 			IDetector detector = mySURF.createDetector();
@@ -51,6 +51,6 @@ public class BenchmarkAllRuntime {
 	}
 
 	public static void main( String args[] ) throws IOException {
-		benchmark("../../../data/mikolajczk/boat",1);
+		benchmark("../../data/graf",1);
 	}
 }

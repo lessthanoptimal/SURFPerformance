@@ -53,13 +53,13 @@ public class CreateDetector {
 	}
 
 	public static void main( String args[] ) throws IOException {
-		processDirectory("../../../data/mikolajczk/bark");
-		processDirectory("../../../data/mikolajczk/bikes");
-		processDirectory("../../../data/mikolajczk/boat");
-		processDirectory("../../../data/mikolajczk/graf");
-		processDirectory("../../../data/mikolajczk/leuven");
-		processDirectory("../../../data/mikolajczk/trees");
-		processDirectory("../../../data/mikolajczk/ubc");
-		processDirectory("../../../data/mikolajczk/wall");
+		processDirectory("../../data/bark");
+		processDirectory("../../data/bikes");
+		processDirectory("../../data/boat");
+		processDirectory("../../data/graf");
+		processDirectory("../../data/leuven");
+		processDirectory("../../data/trees");
+		processDirectory("../../data/ubc");
+		processDirectory("../../data/wall");
 	}
 }

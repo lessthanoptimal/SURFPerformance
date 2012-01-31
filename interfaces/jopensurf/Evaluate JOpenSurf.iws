@@ -2,17 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="45ae2d8f-d3de-4476-b240-5d2639c873e2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../surf_reference/readme.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/DescribePointSurfPanOMatic.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../javasurf/out/production/Javasurf/CreateDescription.class" afterPath="$PROJECT_DIR$/../javasurf/out/production/Javasurf/CreateDescription.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../javasurf/out/production/Javasurf/CreateDetect.class" afterPath="$PROJECT_DIR$/../javasurf/out/production/Javasurf/CreateDetect.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../panomatic/common_panomatic.o" afterPath="$PROJECT_DIR$/../panomatic/common_panomatic.o" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../panomatic/describe_pan" afterPath="$PROJECT_DIR$/../panomatic/describe_pan" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../panomatic/detect_pan" afterPath="$PROJECT_DIR$/../panomatic/detect_pan" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../panomatic/runtime_all" afterPath="$PROJECT_DIR$/../panomatic/runtime_all" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../panomatic/runtime_describe" afterPath="$PROJECT_DIR$/../panomatic/runtime_describe" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../panomatic/runtime_detect" afterPath="$PROJECT_DIR$/../panomatic/runtime_detect" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../surf_reference/detect_surf.o" afterPath="$PROJECT_DIR$/../surf_reference/detect_surf.o" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../surf_reference/detect_surf" afterPath="$PROJECT_DIR$/../surf_reference/detect_surf" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../lib/BoofCV.jar" afterPath="$PROJECT_DIR$/../../lib/BoofCV.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../SURFPerformance.iml" afterPath="$PROJECT_DIR$/../../SURFPerformance.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../javasurf/javasurf.iws" afterPath="$PROJECT_DIR$/../javasurf/javasurf.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../javasurf/src/BenchmarkAllRuntime.java" afterPath="$PROJECT_DIR$/../javasurf/src/BenchmarkAllRuntime.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../javasurf/src/CreateDescription.java" afterPath="$PROJECT_DIR$/../javasurf/src/CreateDescription.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CreateDescriptor.java" afterPath="$PROJECT_DIR$/src/CreateDescriptor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../javasurf/src/CreateDetect.java" afterPath="$PROJECT_DIR$/../javasurf/src/CreateDetect.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Evaluate JOpenSurf.iws" afterPath="$PROJECT_DIR$/Evaluate JOpenSurf.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/BenchmarkAllRuntime.java" afterPath="$PROJECT_DIR$/src/BenchmarkAllRuntime.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CreateDetector.java" afterPath="$PROJECT_DIR$/src/CreateDetector.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../panomatic/common_panomatic.cpp" afterPath="$PROJECT_DIR$/../panomatic/common_panomatic.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../script.sh" afterPath="$PROJECT_DIR$/../script.sh" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../surf_reference/detect_surf.cpp" afterPath="$PROJECT_DIR$/../surf_reference/detect_surf.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../results/describe_stability_BoofCV_MSURF.txt" afterPath="$PROJECT_DIR$/../../results/describe_stability_BoofCV_MSURF.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../results/describe_stability_BoofCV_SURF.txt" afterPath="$PROJECT_DIR$/../../results/describe_stability_BoofCV_SURF.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/BenchmarkFeatureAllRuntime.java" afterPath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/BenchmarkFeatureAllRuntime.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/BenchmarkFeatureDescribeStability.java" afterPath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/BenchmarkFeatureDescribeStability.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/CreateDescriptionFile.java" afterPath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/CreateDescriptionFile.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/CreateDetectionFile.java" afterPath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/CreateDetectionFile.java" />
     </list>
     <ignored path="Evaluate JOpenSurf.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -79,19 +97,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BenchmarkAllRuntime.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="BenchmarkAllRuntime.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/BenchmarkAllRuntime.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="24" selection-start="1451" selection-end="1451" vertical-scroll-proportion="0.0">
+            <state line="55" column="26" selection-start="1451" selection-end="1451" vertical-scroll-proportion="1.4365256">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CreateDescriptor.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="CreateDescriptor.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/CreateDescriptor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="80" column="35" selection-start="2297" selection-end="2297" vertical-scroll-proportion="1.1670378">
+            <state line="84" column="34" selection-start="2474" selection-end="2474" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -100,7 +118,7 @@
       <file leaf-file-name="CreateDetector.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/CreateDetector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="82" selection-start="1577" selection-end="1577" vertical-scroll-proportion="0.0">
+            <state line="24" column="50" selection-start="703" selection-end="721" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -132,9 +150,9 @@
         <option value="$PROJECT_DIR$/src/BenchmarkRuntime.java" />
         <option value="$PROJECT_DIR$/src/BenchmarkDescribeRuntime.java" />
         <option value="$PROJECT_DIR$/src/BenchmarkDetectRuntime.java" />
-        <option value="$PROJECT_DIR$/src/BenchmarkAllRuntime.java" />
-        <option value="$PROJECT_DIR$/src/CreateDetector.java" />
         <option value="$PROJECT_DIR$/src/CreateDescriptor.java" />
+        <option value="$PROJECT_DIR$/src/CreateDetector.java" />
+        <option value="$PROJECT_DIR$/src/BenchmarkAllRuntime.java" />
       </list>
     </option>
   </component>
@@ -173,7 +191,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -208,6 +225,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="Favorites" />
     </panes>
@@ -235,7 +253,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.CreateDescriptor">
+  <component name="RunManager" selected="Application.BenchmarkAllRuntime">
     <configuration default="false" name="BenchmarkDescribeRuntime" type="Application" factoryName="Application" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="BenchmarkDescribeRuntime" />
@@ -458,7 +476,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1280" height="974" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -466,7 +484,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25774878" sideWeight="0.60048425" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26672104" sideWeight="0.60048425" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39951575" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -545,14 +563,9 @@
         <state line="33" column="24" selection-start="941" selection-end="941" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/BenchmarkAllRuntime.java">
+    <entry file="file://$PROJECT_DIR$/src/CreateDescriptor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="24" selection-start="1451" selection-end="1451" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CreateDetector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="82" selection-start="1577" selection-end="1577" vertical-scroll-proportion="0.0" />
+        <state line="84" column="34" selection-start="2474" selection-end="2474" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/BenchmarkDescribeRuntime.java">
@@ -560,9 +573,14 @@
         <state line="33" column="27" selection-start="956" selection-end="956" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CreateDescriptor.java">
+    <entry file="file://$PROJECT_DIR$/src/CreateDetector.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="35" selection-start="2297" selection-end="2297" vertical-scroll-proportion="1.1670378">
+        <state line="24" column="50" selection-start="703" selection-end="721" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/BenchmarkAllRuntime.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="26" selection-start="1451" selection-end="1451" vertical-scroll-proportion="1.4365256">
           <folding />
         </state>
       </provider>

@@ -98,16 +98,16 @@ public class BenchmarkFeatureAllRuntime<T extends ImageSingleBand> {
 	public static void main( String args[] ) throws IOException {
 
 		InterestPointDetector<ImageFloat32> detectAlg =
-				FactoryInterestPoint.fastHessian(100, 2, -1, 1, 9, 4, 4);
+				FactoryInterestPoint.fastHessian(80, 1, -1, 1, 9,4,4);
 
-		DescribeRegionPoint<ImageFloat32> describeAlg =
-				FactoryDescribeRegionPoint.surf(true,ImageFloat32.class);
 //		DescribeRegionPoint<ImageFloat32> describeAlg =
-//				FactoryDescribeRegionPoint.surfm(true, ImageFloat32.class);
+//				FactoryDescribeRegionPoint.surf(true,ImageFloat32.class);
+		DescribeRegionPoint<ImageFloat32> describeAlg =
+				FactoryDescribeRegionPoint.surfm(true, ImageFloat32.class);
 
 		BenchmarkFeatureAllRuntime<ImageFloat32> benchmark =
 				new BenchmarkFeatureAllRuntime<ImageFloat32>(ImageFloat32.class,detectAlg,describeAlg);
 
-		benchmark.benchmark("data/boat", 1);
+		benchmark.benchmark("data/graf", 1);
 	}
 }

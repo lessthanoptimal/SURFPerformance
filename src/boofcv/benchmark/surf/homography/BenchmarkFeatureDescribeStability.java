@@ -164,7 +164,7 @@ public class BenchmarkFeatureDescribeStability {
 			matches.add(numMatches);
 			fractions.add(fractionCorrect);
 			output.print(nameBase.get(i)+" ");
-			System.out.printf(" %5d %4.2f\n",numMatches,fractionCorrect);
+			System.out.printf(" %5d %5.2f\n",numMatches,100*fractionCorrect);
 		}
 		output.println();
 
@@ -272,7 +272,7 @@ public class BenchmarkFeatureDescribeStability {
 //		app.evaluate("OpenCV_SURF.txt");
 //		app.evaluate("BRIEFO.txt");
 //		app.evaluate("BRIEF.txt");
-		app.evaluate("BoofCV_SURF.txt");
+//		app.evaluate("BoofCV_SURF.txt");
 		app.evaluate("BoofCV_MSURF.txt");
 
 	}
