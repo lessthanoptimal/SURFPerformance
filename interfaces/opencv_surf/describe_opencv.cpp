@@ -19,25 +19,25 @@ void process( Mat image , FILE *fid , FILE *output)
     std::vector<KeyPoint> ipts;
 
     // adjust threshold so that it detects about the same number of features
-    // Target is 6334 in graf img1   actual 5652
-    //           3979 in bark img1   actual 4125
-    //           6345 in leuven img1 actual 6370
-    //           6655 in boat img1   actual 7942
-    SurfFeatureDetector detector(80,4,4,false);
+    // Target is 5220 in graf img1   actual 5251
+    //           3429 in bark img1   actual 3867
+    //           5676 in leuven img1 actual 5685
+    //           6595 in boat img1   actual 7564
+    //SurfFeatureDetector detector(110,4,4,false);
 
     // read in location of points
-//    while( true ) {
-//        int x,y;
-//        float scale,yaw;
-//        int ret = fscanf(fid,"%d %d %f %f\n",&x,&y,&scale,&yaw);
-//        if( ret != 4 )
-//            break;
+    while( true ) {
+        float x,y;
+        float scale,yaw;
+        int ret = fscanf(fid,"%f %f %f %f\n",&x,&y,&scale,&yaw);
+        if( ret != 4 )
+            break;
 
-//        KeyPoint p(x,y,scale*28,yaw*180/3.14159265);
-//        ipts.push_back(p);
-//    }
+        KeyPoint p(x,y,scale*20,0);
+        ipts.push_back(p);
+    }
     // Use OpenCV to detect features because it can't detect orientation when the descriptor is computed
-    detector.detect(image,ipts);
+    //    detector.detect(image,ipts);
 
 //    for( size_t i = 0; i < ipts.size(); i++ ) {
 //        KeyPoint &p = ipts.at(i);

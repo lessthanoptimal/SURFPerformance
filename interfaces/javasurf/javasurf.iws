@@ -2,35 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6839c83e-b3be-491b-b1a5-dec25066ab2e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/DescribePointSurfPanOMatic.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../jopensurf/out/production/Jopensurf/BenchmarkAllRuntime.class" afterPath="$PROJECT_DIR$/../jopensurf/out/production/Jopensurf/BenchmarkAllRuntime.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../jopensurf/out/production/Jopensurf/CreateDetector.class" afterPath="$PROJECT_DIR$/../jopensurf/out/production/Jopensurf/CreateDetector.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../panomatic/common_panomatic.o" afterPath="$PROJECT_DIR$/../panomatic/common_panomatic.o" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../panomatic/describe_pan" afterPath="$PROJECT_DIR$/../panomatic/describe_pan" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../panomatic/detect_pan" afterPath="$PROJECT_DIR$/../panomatic/detect_pan" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../panomatic/runtime_all" afterPath="$PROJECT_DIR$/../panomatic/runtime_all" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../panomatic/runtime_describe" afterPath="$PROJECT_DIR$/../panomatic/runtime_describe" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../panomatic/runtime_detect" afterPath="$PROJECT_DIR$/../panomatic/runtime_detect" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../opencv_surf/describe_opencv" afterPath="$PROJECT_DIR$/../opencv_surf/describe_opencv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../surf_reference/detect_surf.o" afterPath="$PROJECT_DIR$/../surf_reference/detect_surf.o" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../surf_reference/detect_surf" afterPath="$PROJECT_DIR$/../surf_reference/detect_surf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../lib/BoofCV.jar" afterPath="$PROJECT_DIR$/../../lib/BoofCV.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../SURFPerformance.iml" afterPath="$PROJECT_DIR$/../../SURFPerformance.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasurf.iws" afterPath="$PROJECT_DIR$/javasurf.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/BenchmarkAllRuntime.java" afterPath="$PROJECT_DIR$/src/BenchmarkAllRuntime.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CreateDescription.java" afterPath="$PROJECT_DIR$/src/CreateDescription.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CreateDetect.java" afterPath="$PROJECT_DIR$/src/CreateDetect.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../jopensurf/Evaluate JOpenSurf.iws" afterPath="$PROJECT_DIR$/../jopensurf/Evaluate JOpenSurf.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../jopensurf/src/BenchmarkAllRuntime.java" afterPath="$PROJECT_DIR$/../jopensurf/src/BenchmarkAllRuntime.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../jopensurf/src/CreateDetector.java" afterPath="$PROJECT_DIR$/../jopensurf/src/CreateDetector.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../panomatic/common_panomatic.cpp" afterPath="$PROJECT_DIR$/../panomatic/common_panomatic.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../script.sh" afterPath="$PROJECT_DIR$/../script.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../opencv_surf/describe_opencv.cpp" afterPath="$PROJECT_DIR$/../opencv_surf/describe_opencv.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../surf_reference/detect_surf.cpp" afterPath="$PROJECT_DIR$/../surf_reference/detect_surf.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../results/describe_stability_BoofCV_MSURF.txt" afterPath="$PROJECT_DIR$/../../results/describe_stability_BoofCV_MSURF.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../results/describe_stability_BoofCV_SURF.txt" afterPath="$PROJECT_DIR$/../../results/describe_stability_BoofCV_SURF.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/BenchmarkFeatureAllRuntime.java" afterPath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/BenchmarkFeatureAllRuntime.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/BenchmarkFeatureDescribeStability.java" afterPath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/BenchmarkFeatureDescribeStability.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/BenchmarkFeatureDetectStability.java" afterPath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/BenchmarkFeatureDetectStability.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/CreateDescriptionFile.java" afterPath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/CreateDescriptionFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/CreateDetectionFile.java" afterPath="$PROJECT_DIR$/../../src/boofcv/benchmark/surf/homography/CreateDetectionFile.java" />
     </list>
     <ignored path="javasurf.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -97,10 +77,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BenchmarkAllRuntime.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BenchmarkAllRuntime.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/BenchmarkAllRuntime.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="24" selection-start="1242" selection-end="1242" vertical-scroll-proportion="0.73333335">
+            <state line="51" column="24" selection-start="1242" selection-end="1242" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -124,10 +104,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CreateDescription.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="CreateDescription.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/CreateDescription.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="69" selection-start="1103" selection-end="1115" vertical-scroll-proportion="0.0">
+            <state line="85" column="32" selection-start="2504" selection-end="2504" vertical-scroll-proportion="1.2379863">
               <folding />
             </state>
           </provider>
@@ -200,7 +180,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -236,6 +215,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Favorites" />
     </panes>
   </component>
@@ -253,16 +233,16 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.BenchmarkAllRuntime">
+  <component name="RunManager" selected="Application.CreateDescription">
     <configuration default="false" name="CreateDescription" type="Application" factoryName="Application" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="CreateDescription" />
@@ -493,7 +473,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27079934" sideWeight="0.60169494" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2756933" sideWeight="0.60169494" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3983051" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -503,8 +483,8 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="EJB" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="EJB" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -597,6 +577,11 @@
         <state line="21" column="44" selection-start="511" selection-end="511" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/CreateDetect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="54" column="39" selection-start="1510" selection-end="1589" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/BenchmarkDescribeRuntime.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="0" selection-start="795" selection-end="907" vertical-scroll-proportion="0.0" />
@@ -607,23 +592,16 @@
         <state line="1" column="20" selection-start="35" selection-end="35" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CreateDescription.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="69" selection-start="1103" selection-end="1115" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CreateDetect.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="39" selection-start="1510" selection-end="1589" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/BenchmarkAllRuntime.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="24" selection-start="1242" selection-end="1242" vertical-scroll-proportion="0.73333335">
+        <state line="51" column="24" selection-start="1242" selection-end="1242" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CreateDescription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="85" column="32" selection-start="2504" selection-end="2504" vertical-scroll-proportion="1.2379863">
           <folding />
         </state>
       </provider>

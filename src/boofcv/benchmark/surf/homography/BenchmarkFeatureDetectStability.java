@@ -143,7 +143,7 @@ public class BenchmarkFeatureDetectStability {
 	}
 
 	private void processDirectory( String directory , String algSuffix ) {
-		System.out.println("Directory: "+directory);
+//		System.out.println("Directory: "+directory);
 		output.println("---------- Directory: "+directory);
 
 		findImageSize(directory);
@@ -176,7 +176,7 @@ public class BenchmarkFeatureDetectStability {
 			matches.add(numMatches);
 			fractions.add(fractionCorrect);
 			output.print(nameBase.get(i)+" ");
-			System.out.printf(" %5d %4.2f %4.2f\n",numMatches,fractionCorrect,fractionAmbiguous);
+//			System.out.printf(" %5d %4.2f %4.2f\n",numMatches,fractionCorrect,fractionAmbiguous);
 		}
 		output.println();
 
