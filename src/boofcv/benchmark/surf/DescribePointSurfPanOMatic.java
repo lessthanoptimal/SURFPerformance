@@ -1,7 +1,8 @@
 /*
  * Copyright (c) 2011-2012, Peter Abeles. All Rights Reserved.
  *
- * This file is part of BoofCV (http://www.boofcv.org).
+ * This file is part of the SURF Performance Benchmark
+ * (https://github.com/lessthanoptimal/SURFPerformance).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,13 +24,6 @@ import boofcv.struct.feature.SurfFeature;
 import boofcv.struct.image.ImageSingleBand;
 import boofcv.struct.sparse.GradientValue;import java.lang.Class;import java.lang.IllegalArgumentException;import java.lang.Math;import java.lang.Override;
 
-/**
- * Straight forward port of Pan-o-Matic descriptor to Java into BoofCV's architecture..
- *
- * Portions of this code fall under the GPL and Copyright (C) 2007-2008 Anael Orlinski.
- *
- * @author Peter Abeles
- */
 public class DescribePointSurfPanOMatic<II extends ImageSingleBand> extends DescribePointSurf<II> {
 
 	double _cmp[][][];

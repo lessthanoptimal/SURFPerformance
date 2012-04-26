@@ -2,8 +2,10 @@ Benchmark for evaluating SURF libraries by Peter Abeles.
 
 Evaluates detection stability, description stability, detection runtime, description runtime, and overall runtime.
 
-http://www.boofcv.org/index.php?title=Performance:SURF
+Results can be viewed at: http://boofcv.org/index.php?title=Performance:SURF
 
+
+Source code can be found here: https://github.com/lessthanoptimal/SURFPerformance
 
 Directory Descriptions:
 
@@ -12,7 +14,9 @@ src/ Benchmark source code
 data/ Where benchmark data is stored.
 
 
-All thirdparty data and libraries must be downloaded from their respective sites
+All third party data and libraries must be downloaded from their respective sites, but the benchmark
+source code is provided.
 
 
-All code is released under a BSD 2.0 license.
+All code is released under a Apache 2.0 license.
+http://www.apache.org/licenses/LICENSE-2.0
