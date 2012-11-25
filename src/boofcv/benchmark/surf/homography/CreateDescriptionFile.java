@@ -31,6 +31,8 @@ import boofcv.factory.feature.describe.FactoryDescribePointAlgs;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.io.image.UtilImageIO;
+import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.feature.TupleDesc;
 import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageFloat32;
@@ -52,10 +54,10 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class CreateDescriptionFile<T extends ImageSingleBand> {
+public class CreateDescriptionFile<T extends ImageSingleBand, D extends TupleDesc_F64> {
 
 	// algorithm that detects the features
-	DescribeRegionPoint<T> alg;
+	DescribeRegionPoint<T,D> alg;
 	// type of input image
 	Class<T> imageType;
 	// name of the description
@@ -68,7 +70,7 @@ public class CreateDescriptionFile<T extends ImageSingleBand> {
 	 * @param imageType Type of input file.
 	 * @param descriptionName The name of the description algorithm.  This name is appended to output files.
 	 */
-	public CreateDescriptionFile(DescribeRegionPoint<T> alg,
+	public CreateDescriptionFile(DescribeRegionPoint<T,D> alg,
 								 Class<T> imageType,
 								 String descriptionName ) {
 		this.alg = alg;
@@ -136,7 +138,7 @@ public class CreateDescriptionFile<T extends ImageSingleBand> {
 		out.printf("%d\n",alg.getDescriptionLength());
 		for( DetectionInfo d : detections  ) {
 			Point2D_F64 p = d.location;
-			TupleDesc_F64 desc = process(p.x, p.y, d.yaw, d.scale);
+			D desc = process(p.x, p.y, d.yaw, d.scale);
 			if( desc != null ) {
 				// save the location and tuple description
 				out.printf("%.3f %.3f %f",p.getX(),p.getY(),d.yaw);
@@ -149,7 +151,7 @@ public class CreateDescriptionFile<T extends ImageSingleBand> {
 		out.close();
 	}
 
-	protected TupleDesc_F64 process( double x , double y , double theta , double scale )
+	protected D process( double x , double y , double theta , double scale )
 	{
 		return alg.process(x,y,theta,scale,null);
 	}
@@ -158,7 +160,7 @@ public class CreateDescriptionFile<T extends ImageSingleBand> {
 	 * Java port of Pan-o-Matic's descriptor to make examing its behavior easier.
 	 */
 	public static <T extends ImageSingleBand, II extends ImageSingleBand>
-	DescribeRegionPoint<T> surfPanOMaticInBoofCV(boolean isOriented, Class<T> imageType) {
+	DescribeRegionPoint<T,SurfFeature> surfPanOMaticInBoofCV(boolean isOriented, Class<T> imageType) {
 		OrientationIntegral<II> orientation = null;
 
 		Class<II> integralType = GIntegralImageOps.getIntegralType(imageType);
@@ -173,7 +175,7 @@ public class CreateDescriptionFile<T extends ImageSingleBand> {
 	public static <T extends ImageSingleBand>
 	void doStuff( String directory , String imageSuffix , Class<T> imageType ) throws FileNotFoundException {
 //		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.surf(true,imageType);
-		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.surfm(true, imageType);
+		DescribeRegionPoint<T,SurfFeature> alg = FactoryDescribeRegionPoint.surfm(true, imageType);
 //		DescribeRegionPoint<T> alg = surfPanOMaticInBoofCV(true,imageType);
 
 //		int radius = 12;
@@ -192,7 +194,7 @@ public class CreateDescriptionFile<T extends ImageSingleBand> {
 //		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"SAMPLEDIFF");
 //		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"SAMPLE");
 //		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"BoofCV_SURF");
-		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"BoofCV_MSURF");
+		CreateDescriptionFile<T,SurfFeature> cdf = new CreateDescriptionFile<T,SurfFeature>(alg,imageType,"BoofCV_MSURF");
 //		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"BRIEFO");
 //		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"BRIEF");
 //		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"NEW");

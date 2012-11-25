@@ -20,8 +20,8 @@
 package boofcv.benchmark.surf.homography;
 
 import boofcv.abst.feature.associate.GeneralAssociation;
-import boofcv.alg.feature.associate.ScoreAssociateEuclideanSq;
-import boofcv.alg.feature.associate.ScoreAssociation;
+import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
+import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.struct.FastQueue;
 import boofcv.struct.feature.AssociatedIndex;
@@ -30,7 +30,7 @@ import georegression.geometry.UtilPoint2D_F32;
 import georegression.struct.homo.Homography2D_F32;
 import georegression.struct.point.Point2D_F32;
 import georegression.struct.point.Point2D_F64;
-import georegression.transform.homo.HomographyPointOps;
+import georegression.transform.homo.HomographyPointOps_F32;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -200,7 +200,9 @@ public class BenchmarkFeatureDescribeStability {
 			listDst.add(f.getDescription());
 		}
 
-		assoc.associate(listSrc,listDst);
+		assoc.setSource(listSrc);
+		assoc.setDestination(listDst);
+		assoc.associate();
 
 		FastQueue<AssociatedIndex> matches = assoc.getMatches();
 
@@ -219,7 +221,7 @@ public class BenchmarkFeatureDescribeStability {
 
 			src.set((float)s.x,(float)s.y);
 
-			HomographyPointOps.transform(keyToTarget,src,expected);
+			HomographyPointOps_F32.transform(keyToTarget, src, expected);
 
 			double dist = UtilPoint2D_F32.distance(expected.x,expected.y,(float)d.x,(float)d.y);
 
@@ -251,7 +253,7 @@ public class BenchmarkFeatureDescribeStability {
 	public static void main( String args[] ) throws FileNotFoundException {
 		double tolerance = 3;
 
-		ScoreAssociation score = new ScoreAssociateEuclideanSq();
+		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
 		GeneralAssociation<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, -1, true);
 
 		BenchmarkFeatureDescribeStability app = new BenchmarkFeatureDescribeStability(assoc,".png",tolerance);
@@ -267,12 +269,12 @@ public class BenchmarkFeatureDescribeStability {
 
 //		app.evaluate("SURF.txt");
 //		app.evaluate("JavaSURF.txt");
-		app.evaluate("PanOMatic.txt");
+//		app.evaluate("PanOMatic.txt");
 //		app.evaluate("JOpenSURF.txt");
 //		app.evaluate("OpenSURF.txt");
 //		app.evaluate("OpenCV_SURF.txt");
 //		app.evaluate("BoofCV_SURF.txt");
-//		app.evaluate("BoofCV_MSURF.txt");
+		app.evaluate("BoofCV_MSURF.txt");
 
 	}
 }

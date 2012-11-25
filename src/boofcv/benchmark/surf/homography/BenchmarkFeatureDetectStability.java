@@ -20,14 +20,14 @@
 package boofcv.benchmark.surf.homography;
 
 import boofcv.abst.feature.associate.GeneralAssociation;
-import boofcv.alg.feature.associate.ScoreAssociateEuclideanSq;
-import boofcv.alg.feature.associate.ScoreAssociation;
+import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
+import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.struct.feature.TupleDesc_F64;
 import georegression.geometry.UtilPoint2D_F64;
 import georegression.struct.homo.Homography2D_F32;
 import georegression.struct.point.Point2D_F32;
-import georegression.transform.homo.HomographyPointOps;
+import georegression.transform.homo.HomographyPointOps_F32;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -236,11 +236,11 @@ public class BenchmarkFeatureDetectStability {
 			sample[2].set(src.x,src.y+1);
 			sample[3].set(src.x,src.y-1);
 
-			HomographyPointOps.transform(keyToTarget,src,expected);
+			HomographyPointOps_F32.transform(keyToTarget, src, expected);
 			// estimate how the transform would rescale the image
 			double expectedScale = 0;
 			for( Point2D_F32 s : sample ) {
-				HomographyPointOps.transform(keyToTarget,s,sampleDst);
+				HomographyPointOps_F32.transform(keyToTarget,s,sampleDst);
 				expectedScale += expected.distance(sampleDst);
 			}
 			expectedScale /= sample.length;
@@ -250,15 +250,11 @@ public class BenchmarkFeatureDetectStability {
 				continue;
 			}
 
-//			maxCorrect++;
-
 			int numMatched = 0;
 			for( DetectionInfo t : targetFrame ) {
 				double dist = UtilPoint2D_F64.distance(expected.x,expected.y,t.location.x,t.location.y);
 				double scaleDiff = Math.abs(t.scale-expectedScale)/expectedScale;
 				if( dist < tolerance && scaleDiff < scaleTolerance ) {
-//					numCorrect++;
-//					break;
 					numMatched++;
 				}
 			}
@@ -280,7 +276,7 @@ public class BenchmarkFeatureDetectStability {
 	public static void main( String args[] ) throws FileNotFoundException {
 		double tolerance = 1.5;
 
-		ScoreAssociation score = new ScoreAssociateEuclideanSq();
+		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
 		GeneralAssociation<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, -1, true);
 
 		BenchmarkFeatureDetectStability app = new BenchmarkFeatureDetectStability(assoc,".png",tolerance);
@@ -294,12 +290,14 @@ public class BenchmarkFeatureDetectStability {
 		app.addDirectory("data/wall/");
 		app.addDirectory("data/bark/");
 
-		app.evaluate("FH");
-		app.evaluate("PanOMatic");
-		app.evaluate("OpenSURF");
-		app.evaluate("OpenCV");
-		app.evaluate("SURF");
-		app.evaluate("JOpenSURF");
-		app.evaluate("JavaSURF");
+		app.evaluate("BSIFT");
+//		app.evaluate("OpenSIFT");
+//		app.evaluate("FH");
+//		app.evaluate("PanOMatic");
+//		app.evaluate("OpenSURF");
+//		app.evaluate("OpenCV");
+//		app.evaluate("SURF");
+//		app.evaluate("JOpenSURF");
+//		app.evaluate("JavaSURF");
 	}
 }

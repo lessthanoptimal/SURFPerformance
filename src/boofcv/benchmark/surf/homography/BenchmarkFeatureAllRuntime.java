@@ -25,6 +25,8 @@ import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
+import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.feature.TupleDesc;
 import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageFloat32;
@@ -41,15 +43,15 @@ import java.io.IOException;
  *
  * @author Peter Abeles
  */
-public class BenchmarkFeatureAllRuntime<T extends ImageSingleBand> {
+public class BenchmarkFeatureAllRuntime<T extends ImageSingleBand, D extends TupleDesc> {
 
 	Class<T> imageType;
 	InterestPointDetector<T> detectAlg;
-	DescribeRegionPoint<T> describeAlg;
+	DescribeRegionPoint<T,D> describeAlg;
 
 	public BenchmarkFeatureAllRuntime(Class<T> imageType,
 									  InterestPointDetector<T> detectAlg,
-									  DescribeRegionPoint<T> describeAlg ) {
+									  DescribeRegionPoint<T,D> describeAlg ) {
 		this.imageType = imageType;
 		this.detectAlg = detectAlg;
 		this.describeAlg = describeAlg;
@@ -71,7 +73,7 @@ public class BenchmarkFeatureAllRuntime<T extends ImageSingleBand> {
 			long before = System.currentTimeMillis();
 
 			detectAlg.detect(input);
-			TupleDesc_F64 desc = new TupleDesc_F64(describeAlg.getDescriptionLength());
+			D desc = describeAlg.createDescription();
 			describeAlg.setImage(input);
 
 			int N = detectAlg.getNumberOfFeatures();
@@ -101,13 +103,13 @@ public class BenchmarkFeatureAllRuntime<T extends ImageSingleBand> {
 		InterestPointDetector<ImageFloat32> detectAlg =
 				FactoryInterestPoint.fastHessian(80, 1, -1, 1, 9,4,4);
 
+		DescribeRegionPoint<ImageFloat32,SurfFeature> describeAlg =
+				FactoryDescribeRegionPoint.surf(true,ImageFloat32.class);
 //		DescribeRegionPoint<ImageFloat32> describeAlg =
-//				FactoryDescribeRegionPoint.surf(true,ImageFloat32.class);
-		DescribeRegionPoint<ImageFloat32> describeAlg =
-				FactoryDescribeRegionPoint.surfm(true, ImageFloat32.class);
+//				FactoryDescribeRegionPoint.surfm(true, ImageFloat32.class);
 
-		BenchmarkFeatureAllRuntime<ImageFloat32> benchmark =
-				new BenchmarkFeatureAllRuntime<ImageFloat32>(ImageFloat32.class,detectAlg,describeAlg);
+		BenchmarkFeatureAllRuntime<ImageFloat32,SurfFeature> benchmark =
+				new BenchmarkFeatureAllRuntime<ImageFloat32,SurfFeature>(ImageFloat32.class,detectAlg,describeAlg);
 
 		benchmark.benchmark("data/graf", 1);
 	}

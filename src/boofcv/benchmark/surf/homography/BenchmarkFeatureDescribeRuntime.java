@@ -23,6 +23,8 @@ package boofcv.benchmark.surf.homography;
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
+import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.feature.TupleDesc;
 import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageFloat32;
@@ -39,12 +41,12 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class BenchmarkFeatureDescribeRuntime<T extends ImageSingleBand> {
+public class BenchmarkFeatureDescribeRuntime<T extends ImageSingleBand, D extends TupleDesc> {
 
 	Class<T> imageType;
-	DescribeRegionPoint<T> alg;
+	DescribeRegionPoint<T,D> alg;
 
-	public BenchmarkFeatureDescribeRuntime(Class<T> imageType, DescribeRegionPoint<T> alg) {
+	public BenchmarkFeatureDescribeRuntime(Class<T> imageType, DescribeRegionPoint<T,D> alg) {
 		this.imageType = imageType;
 		this.alg = alg;
 	}
@@ -65,7 +67,7 @@ public class BenchmarkFeatureDescribeRuntime<T extends ImageSingleBand> {
 
 		for( int i = 0; i < 10; i++ ) {
 
-			TupleDesc_F64 desc = new TupleDesc_F64(alg.getDescriptionLength());
+			D desc = alg.createDescription();
 
 			long before = System.currentTimeMillis();
 
@@ -91,11 +93,11 @@ public class BenchmarkFeatureDescribeRuntime<T extends ImageSingleBand> {
 	public static void main( String args[] ) throws IOException {
 
 //		DescribeRegionPoint<ImageFloat32> alg = FactoryDescribeRegionPoint.surf(true,ImageFloat32.class);
-		DescribeRegionPoint<ImageFloat32> alg = FactoryDescribeRegionPoint.surfm(true, ImageFloat32.class);
+		DescribeRegionPoint<ImageFloat32,SurfFeature> alg = FactoryDescribeRegionPoint.surfm(true, ImageFloat32.class);
 
 
-		BenchmarkFeatureDescribeRuntime<ImageFloat32> benchmark =
-				new BenchmarkFeatureDescribeRuntime<ImageFloat32>(ImageFloat32.class,alg);
+		BenchmarkFeatureDescribeRuntime<ImageFloat32,SurfFeature> benchmark =
+				new BenchmarkFeatureDescribeRuntime<ImageFloat32,SurfFeature>(ImageFloat32.class,alg);
 
 		benchmark.benchmark("data/boat", 1, "FH");
 	}

@@ -69,12 +69,11 @@ public class DescribePointSurfPanOMatic<II extends ImageSingleBand> extends Desc
 	 * @param scale Scale of the interest point. Null is returned if the feature goes outside the image border.
 	 * @param angle The angle the feature is pointing at in radians.
 	 * @param ret storage for the feature. Must have 64 values. If null a new feature will be declared internally.
-	 * @return The SURF interest point or null if the feature region goes outside the image.
 	 */
 	@Override
-	public SurfFeature describe( double c_x , double c_y ,
-								 double scale , double angle ,
-								 SurfFeature ret )
+	public void describe( double c_x , double c_y ,
+						  double scale , double angle ,
+						  SurfFeature ret )
 	{
 		double c = Math.cos(angle);
 		double s = -Math.sin(angle);
@@ -116,8 +115,6 @@ public class DescribePointSurfPanOMatic<II extends ImageSingleBand> extends Desc
 
 		// Laplacian's sign
 		ret.laplacianPositive = computeLaplaceSign((int)Math.round(c_x),(int)Math.round(c_y), scale);
-
-		return ret;
 	}
 
 	private void zeroCmp() {
