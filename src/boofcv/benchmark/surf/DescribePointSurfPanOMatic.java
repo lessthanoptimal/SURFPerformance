@@ -19,10 +19,12 @@
 
 package boofcv.benchmark.surf;
 
-import boofcv.alg.feature.describe.DescribePointSurf;import boofcv.alg.feature.describe.SurfDescribeOps;import boofcv.factory.filter.kernel.FactoryKernelGaussian;
+import boofcv.alg.feature.describe.DescribePointSurf;
+import boofcv.alg.feature.describe.SurfDescribeOps;
+import boofcv.factory.filter.kernel.FactoryKernelGaussian;
 import boofcv.struct.feature.SurfFeature;
 import boofcv.struct.image.ImageSingleBand;
-import boofcv.struct.sparse.GradientValue;import java.lang.Class;import java.lang.IllegalArgumentException;import java.lang.Math;import java.lang.Override;
+import boofcv.struct.sparse.GradientValue;
 
 public class DescribePointSurfPanOMatic<II extends ImageSingleBand> extends DescribePointSurf<II> {
 
@@ -66,14 +68,14 @@ public class DescribePointSurfPanOMatic<II extends ImageSingleBand> extends Desc
 	 *
 	 * @param c_x Location of interest point.
 	 * @param c_y Location of interest point.
-	 * @param scale Scale of the interest point. Null is returned if the feature goes outside the image border.
 	 * @param angle The angle the feature is pointing at in radians.
+	 * @param scale Scale of the interest point. Null is returned if the feature goes outside the image border.
 	 * @param ret storage for the feature. Must have 64 values. If null a new feature will be declared internally.
 	 */
 	@Override
-	public void describe( double c_x , double c_y ,
-						  double scale , double angle ,
-						  SurfFeature ret )
+	public void describe(double c_x, double c_y,
+						 double angle, double scale,
+						 SurfFeature ret)
 	{
 		double c = Math.cos(angle);
 		double s = -Math.sin(angle);

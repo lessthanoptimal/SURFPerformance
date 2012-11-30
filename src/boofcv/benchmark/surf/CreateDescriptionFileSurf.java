@@ -37,7 +37,7 @@ public class CreateDescriptionFileSurf {
 
 		CreateDescriptionFile<T,SurfFeature> cdf = new CreateDescriptionFile<T,SurfFeature>(alg,imageType,"BoofCV_MSURF");
 
-		cdf.directory(directory,imageSuffix,"SURF.txt");
+		cdf.directory(directory,imageSuffix,"FH.txt");
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {

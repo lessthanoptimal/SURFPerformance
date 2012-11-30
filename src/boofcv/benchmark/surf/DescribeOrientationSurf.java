@@ -80,7 +80,7 @@ public class DescribeOrientationSurf<T extends ImageSingleBand, II extends Image
 
 		orientation.setScale(scale);
 		angle = orientation.compute(x,y);
-		describe.describe(x,y,angle,scale,ret);
+		describe.describe(x,y, angle, scale, ret);
 
 		return ret;
 	}

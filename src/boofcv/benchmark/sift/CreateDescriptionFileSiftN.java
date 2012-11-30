@@ -19,7 +19,6 @@
 
 package boofcv.benchmark.sift;
 
-import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.benchmark.homography.CreateDescriptionFile;
 import boofcv.struct.feature.SurfFeature;
 import boofcv.struct.image.ImageFloat32;
@@ -68,7 +67,7 @@ public class CreateDescriptionFileSiftN extends CreateDescriptionFile<ImageFloat
 		CreateDescriptionFileSiftN cdf =
 				new CreateDescriptionFileSiftN("BOOFCV_SIFTN");
 
-		cdf.directory(directory,imageSuffix,"OpenSIFT.txt");
+		cdf.directory(directory,imageSuffix,"FH.txt");
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {
