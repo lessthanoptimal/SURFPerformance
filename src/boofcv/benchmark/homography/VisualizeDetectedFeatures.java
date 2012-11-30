@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package boofcv.benchmark.surf.homography;
+package boofcv.benchmark.homography;
 
 import boofcv.gui.image.ShowImages;
 import boofcv.io.image.UtilImageIO;
@@ -32,8 +32,9 @@ import java.util.List;
 public class VisualizeDetectedFeatures {
 	public static void main( String args[] ) {
 
-		display("data/bikes", "img1", "BSIFT");
-		display("data/bikes", "img1", "OpenSIFT");
+		display("data/trees", "img1", "BSIFT");
+		display("data/trees", "img2", "BSIFT");
+		display("data/trees", "img3", "BSIFT");
 //		display("data/trees", "img2", "OpenSIFT");
 
 //		display("data/trees", "img1", "PanOMatic");

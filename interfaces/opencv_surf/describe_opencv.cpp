@@ -63,7 +63,7 @@ void process( Mat image , FILE *fid , FILE *output)
     fprintf(output,"64\n");
     for( size_t i = 0; i < ipts.size(); i++ ) {
         KeyPoint &p = ipts.at(i);
-        fprintf(output,"%d %d %f",(int)p.pt.x,(int)p.pt.y,p.angle);
+        fprintf(output,"%7.3f %7.3f %7.5f",p.pt.x,p.pt.y,p.angle);
         for( int j = 0; j < 64; j++ ) {
            float val = descriptors.at<float>(i,j);
            fprintf(output," %0.10f",(float)val);

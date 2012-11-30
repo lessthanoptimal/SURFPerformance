@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package boofcv.benchmark.surf.homography;
+package boofcv.benchmark.homography;
 
 import boofcv.struct.feature.TupleDesc_F64;
 import bubo.io.serialization.SerializationDefinitionManager;

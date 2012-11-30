@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package boofcv.benchmark.surf.homography;
+package boofcv.benchmark.homography;
 
 import georegression.struct.point.Point2D_F64;
 
@@ -27,9 +27,9 @@ import georegression.struct.point.Point2D_F64;
  */
 public class DetectionInfo {
 
-	Point2D_F64 location;
-	double scale;
-	double yaw;
+	public Point2D_F64 location;
+	public double scale;
+	public double yaw;
 
 	public Point2D_F64 getLocation() {
 		return location;

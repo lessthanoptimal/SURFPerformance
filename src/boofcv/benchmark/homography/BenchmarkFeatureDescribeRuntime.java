@@ -17,13 +17,13 @@
  * limitations under the License.
  */
 
-package boofcv.benchmark.surf.homography;
+package boofcv.benchmark.homography;
 
 
-import boofcv.abst.feature.detect.interest.InterestPointDetector;
+import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.core.image.ConvertBufferedImage;
-import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
-import boofcv.struct.image.ImageBase;
+import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.feature.TupleDesc;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 
@@ -31,43 +31,54 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+
 
 /**
- * Evaluates how fast interest points are detected at runtime.
+ * Evaluates how fast a descriptor is at runtime.
  *
  * @author Peter Abeles
  */
-public class BenchmarkFeatureDetectRuntime<T extends ImageSingleBand> {
+public class BenchmarkFeatureDescribeRuntime<T extends ImageSingleBand, D extends TupleDesc> {
 
 	Class<T> imageType;
-	InterestPointDetector<T> alg;
+	DescribeRegionPoint<T,D> alg;
 
-	public BenchmarkFeatureDetectRuntime(Class<T> imageType, InterestPointDetector<T> alg) {
+	public BenchmarkFeatureDescribeRuntime(Class<T> imageType, DescribeRegionPoint<T,D> alg) {
 		this.imageType = imageType;
 		this.alg = alg;
 	}
 
-	public void benchmark( String directory , int imageNumber )
+	public void benchmark( String directory , int imageNumber , String detector )
 			throws IOException
 	{
-		String imageName = String.format("%s/img%d.png", directory, imageNumber);
+		String detectName = String.format("%s/DETECTED_img%d_%s.txt",directory,imageNumber,detector);
+		String imageName = String.format("%s/img%d.png",directory,imageNumber);
 
 		BufferedImage image = ImageIO.read(new File(imageName));
 
-		T input = ConvertBufferedImage.convertFromSingle(image, null, imageType);
+		T input = ConvertBufferedImage.convertFromSingle(image,null,imageType);
+
+		List<DetectionInfo> detections = LoadBenchmarkFiles.loadDetection(detectName);
 
 		long best = Long.MAX_VALUE;
 
 		for( int i = 0; i < 10; i++ ) {
 
+			D desc = alg.createDescription();
+
 			long before = System.currentTimeMillis();
 
-			alg.detect(input);
+			alg.setImage(input);
+
+			for( DetectionInfo d : detections ) {
+				alg.process(d.location.x, d.location.y, d.yaw, d.scale, desc);
+			}
 
 			long after = System.currentTimeMillis();
 			long elapsed = after-before;
 
-			System.out.println("time = "+elapsed+" num detected "+alg.getNumberOfFeatures());
+			System.out.println("time = "+elapsed);
 
 			if( elapsed < best )
 				best = elapsed;
@@ -75,15 +86,5 @@ public class BenchmarkFeatureDetectRuntime<T extends ImageSingleBand> {
 
 		System.out.println();
 		System.out.println("Best = "+best);
-	}
-
-	public static void main( String args[] ) throws IOException {
-
-		InterestPointDetector<ImageFloat32> alg = FactoryInterestPoint.fastHessian(100, 2, -1, 1, 9, 4, 4);
-
-		BenchmarkFeatureDetectRuntime<ImageFloat32> benchmark =
-				new BenchmarkFeatureDetectRuntime<ImageFloat32>(ImageFloat32.class,alg);
-
-		benchmark.benchmark("data/boat", 1);
 	}
 }

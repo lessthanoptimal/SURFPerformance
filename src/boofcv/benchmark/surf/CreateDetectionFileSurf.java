@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package boofcv.benchmark.sift;
+package boofcv.benchmark.surf;
 
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.benchmark.homography.CreateDetectionFile;
@@ -30,27 +30,30 @@ import java.io.FileNotFoundException;
 /**
  * @author Peter Abeles
  */
-public class CreateDetectionFileSift {
-	public static void doStuff( String directory , String suffix ) throws FileNotFoundException {
+public class CreateDetectionFileSurf {
+
+	public static <T extends ImageSingleBand>
+	void doStuff( String directory , String suffix , Class<T> imageType ) throws FileNotFoundException {
 		// below are the settings used for detect stability test
 		// graf image 1 with 2000 features
-		InterestPointDetector<ImageFloat32> alg = FactoryInterestPoint.siftDetector(1.6, 5, 4, false, 3, 5, -1 , 10);
+		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(80, 1, -1, 1, 9, 4, 4);
 		// below is the settings used for describe stability test
 //		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(3, 1, -1, 1, 9, 4, 4);
 
-		CreateDetectionFile<ImageFloat32> cdf =
-				new CreateDetectionFile<ImageFloat32>(alg,null,ImageFloat32.class,"BSIFT");
+		CreateDetectionFile<T> cdf = new CreateDetectionFile<T>(alg,null,imageType,"FH");
 		cdf.directory(directory,suffix);
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {
-		doStuff("data/bikes/",".png");
-		doStuff("data/boat/",".png");
-		doStuff("data/graf/",".png");
-		doStuff("data/leuven/",".png");
-		doStuff("data/ubc/",".png");
-		doStuff("data/trees/",".png");
-		doStuff("data/wall/",".png");
-		doStuff("data/bark/",".png");
+		Class imageType = ImageFloat32.class;
+
+		doStuff("data/bikes/",".png",imageType);
+		doStuff("data/boat/",".png",imageType);
+		doStuff("data/graf/",".png",imageType);
+		doStuff("data/leuven/",".png",imageType);
+		doStuff("data/ubc/",".png",imageType);
+		doStuff("data/trees/",".png",imageType);
+		doStuff("data/wall/",".png",imageType);
+		doStuff("data/bark/",".png",imageType);
 	}
 }

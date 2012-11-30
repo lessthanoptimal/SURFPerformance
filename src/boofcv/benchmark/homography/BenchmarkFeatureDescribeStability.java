@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-package boofcv.benchmark.surf.homography;
+package boofcv.benchmark.homography;
 
 import boofcv.abst.feature.associate.GeneralAssociation;
 import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
@@ -58,6 +58,7 @@ public class BenchmarkFeatureDescribeStability {
 	double fractionCorrect;
 
 	int totalMatches;
+	int totalFeatures;
 	double totalCorrect;
 
 	List<String> directories = new ArrayList<String>();
@@ -118,15 +119,18 @@ public class BenchmarkFeatureDescribeStability {
 
 		totalCorrect = 0;
 		totalMatches = 0;
+		totalFeatures = 0;
 		for( String dir : directories ) {
 			processDirectory(dir,algSuffix);
 		}
 
 		System.out.println("Summary Score:");
+		System.out.println("   num features  = "+totalFeatures);
 		System.out.println("   num matches   = "+totalMatches);
 		System.out.println("   total correct = "+totalCorrect);
 		output.println("Summary Score:");
-		output.println("   num matches   = "+totalMatches);
+		output.println("   num features  = " + totalFeatures);
+		output.println("   num matches   = " + totalMatches);
 		output.println("   total correct = " + totalCorrect);
 
 		output.close();
@@ -162,10 +166,11 @@ public class BenchmarkFeatureDescribeStability {
 			associationScore(keyFrame,targetFrame,keyToTarget);
 			totalCorrect += fractionCorrect;
 			totalMatches += numMatches;
+			totalFeatures += targetFrame.size();
 			matches.add(numMatches);
 			fractions.add(fractionCorrect);
 			output.print(nameBase.get(i)+" ");
-			System.out.printf(" %5d %5.2f\n",numMatches,100*fractionCorrect);
+			System.out.printf(" %5s %5d %5.2f\n",nameBase.get(i),numMatches,100*fractionCorrect);
 		}
 		output.println();
 
@@ -267,6 +272,10 @@ public class BenchmarkFeatureDescribeStability {
 		app.addDirectory("data/wall/");
 		app.addDirectory("data/bark/");
 
+//		app.evaluate("BOOFCV_SIFT1.txt");
+		app.evaluate("BOOFCV_SIFTN.txt");
+//		app.evaluate("OpenSURF.txt");
+
 //		app.evaluate("SURF.txt");
 //		app.evaluate("JavaSURF.txt");
 //		app.evaluate("PanOMatic.txt");
@@ -274,7 +283,8 @@ public class BenchmarkFeatureDescribeStability {
 //		app.evaluate("OpenSURF.txt");
 //		app.evaluate("OpenCV_SURF.txt");
 //		app.evaluate("BoofCV_SURF.txt");
-		app.evaluate("BoofCV_MSURF.txt");
+
+//		app.evaluate("BoofCV_MSURF.txt");
 
 	}
 }

@@ -17,27 +17,13 @@
  * limitations under the License.
  */
 
-package boofcv.benchmark.surf.homography;
+package boofcv.benchmark.homography;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
-import boofcv.abst.feature.describe.WrapDescribeSurf;
-import boofcv.alg.feature.describe.DescribePointSurf;
-import boofcv.alg.feature.orientation.OrientationImage;
-import boofcv.alg.feature.orientation.OrientationIntegral;
-import boofcv.alg.transform.ii.GIntegralImageOps;
-import boofcv.benchmark.surf.DescribePointSurfPanOMatic;
 import boofcv.core.image.ConvertBufferedImage;
-import boofcv.factory.feature.describe.FactoryDescribePointAlgs;
-import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
-import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.feature.SurfFeature;
-import boofcv.struct.feature.TupleDesc;
 import boofcv.struct.feature.TupleDesc_F64;
-import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
-import boofcv.struct.image.ImageUInt8;
 import georegression.struct.point.Point2D_F64;
 
 import java.awt.image.BufferedImage;
@@ -45,6 +31,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -56,8 +43,9 @@ import java.util.List;
  */
 public class CreateDescriptionFile<T extends ImageSingleBand, D extends TupleDesc_F64> {
 
-	// algorithm that detects the features
-	DescribeRegionPoint<T,D> alg;
+	// algorithm that describes the features
+	protected DescribeRegionPoint<T,D> describe;
+
 	// type of input image
 	Class<T> imageType;
 	// name of the description
@@ -66,14 +54,14 @@ public class CreateDescriptionFile<T extends ImageSingleBand, D extends TupleDes
 	/**
 	 * Defines the set of images and detection files that are to be processed.
 	 *
-	 * @param alg Algorithm which creates a description for the feature.
+	 * @param describe Algorithm which creates a description for the feature.
 	 * @param imageType Type of input file.
 	 * @param descriptionName The name of the description algorithm.  This name is appended to output files.
 	 */
-	public CreateDescriptionFile(DescribeRegionPoint<T,D> alg,
+	public CreateDescriptionFile(DescribeRegionPoint<T,D> describe,
 								 Class<T> imageType,
 								 String descriptionName ) {
-		this.alg = alg;
+		this.describe = describe;
 		this.imageType = imageType;
 		this.descriptionName = descriptionName;
 	}
@@ -128,20 +116,21 @@ public class CreateDescriptionFile<T extends ImageSingleBand, D extends TupleDes
 	public void process( BufferedImage input , String detectionName , String outputName ) throws FileNotFoundException {
 		T image = ConvertBufferedImage.convertFromSingle(input,null,imageType);
 
-		alg.setImage(image);
+		describe.setImage(image);
 
 		List<DetectionInfo> detections = LoadBenchmarkFiles.loadDetection(detectionName);
 
 		FileOutputStream fos = new FileOutputStream(outputName);
 		PrintStream out = new PrintStream(fos);
 
-		out.printf("%d\n",alg.getDescriptionLength());
+		out.printf("%d\n", describe.getDescriptionLength());
 		for( DetectionInfo d : detections  ) {
 			Point2D_F64 p = d.location;
-			D desc = process(p.x, p.y, d.yaw, d.scale);
-			if( desc != null ) {
+			List<Description> descList = process(p.x, p.y, d.yaw, d.scale);
+			for( Description result : descList ) {
 				// save the location and tuple description
-				out.printf("%.3f %.3f %f",p.getX(),p.getY(),d.yaw);
+				out.printf("%.3f %.3f %f",result.x,result.y,result.yaw);
+				D desc = result.desc;
 				for( int i = 0; i < desc.value.length; i++ ) {
 					out.printf(" %.10f",desc.value[i]);
 				}
@@ -151,66 +140,31 @@ public class CreateDescriptionFile<T extends ImageSingleBand, D extends TupleDes
 		out.close();
 	}
 
-	protected D process( double x , double y , double theta , double scale )
+	protected List<Description> process( double x , double y , double theta , double scale )
 	{
-		return alg.process(x,y,theta,scale,null);
+		List<Description> ret = new ArrayList<Description>();
+
+		D found = describe.process(x,y,theta,scale,null);
+
+		if( found != null ) {
+			Description d = new Description();
+			d.x = x;
+			d.y = y;
+			d.yaw = theta;
+			d.scale = scale;
+			d.desc = found;
+			ret.add(d);
+		}
+
+		return ret;
 	}
 
-	/**
-	 * Java port of Pan-o-Matic's descriptor to make examing its behavior easier.
-	 */
-	public static <T extends ImageSingleBand, II extends ImageSingleBand>
-	DescribeRegionPoint<T,SurfFeature> surfPanOMaticInBoofCV(boolean isOriented, Class<T> imageType) {
-		OrientationIntegral<II> orientation = null;
+	protected class Description
+	{
+		public double x,y, yaw,scale;
+		public D desc;
 
-		Class<II> integralType = GIntegralImageOps.getIntegralType(imageType);
-
-		if( isOriented )
-			orientation = FactoryOrientationAlgs.sliding_ii(0.65, Math.PI/3.0,8,-1, 6, integralType);
-
-		DescribePointSurf<II> alg = new DescribePointSurfPanOMatic<II>(integralType);
-		return new WrapDescribeSurf<T,II>( alg ,orientation);
-	}
-
-	public static <T extends ImageSingleBand>
-	void doStuff( String directory , String imageSuffix , Class<T> imageType ) throws FileNotFoundException {
-//		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.surf(true,imageType);
-		DescribeRegionPoint<T,SurfFeature> alg = FactoryDescribeRegionPoint.surfm(true, imageType);
-//		DescribeRegionPoint<T> alg = surfPanOMaticInBoofCV(true,imageType);
-
-//		int radius = 12;
-//		int numAngles = 8;
-//		int numJoints = 2;
-//		IntensityGraphDesc graph = createCircle(radius,numAngles,numJoints);
-//		connectSpiderWeb(numAngles,numJoints,graph);
-//		DescribeRegionPoint<T> alg = wrap(graph,imageType);
-
-//		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.brief(16, 512, -1, 4, true, imageType);
-
-//		DescribeRegionPoint<T> alg = FactoryDescribeRegionPoint.brief(16,512,-1,4,false,imageType);
-//		DescribeRegionPoint<T> alg = DescribePointSamples.create(imageType);
-//		DescribeRegionPoint<T> alg = DescribeSampleDifference.create(imageType);
-
-//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"SAMPLEDIFF");
-//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"SAMPLE");
-//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"BoofCV_SURF");
-		CreateDescriptionFile<T,SurfFeature> cdf = new CreateDescriptionFile<T,SurfFeature>(alg,imageType,"BoofCV_MSURF");
-//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"BRIEFO");
-//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"BRIEF");
-//		CreateDescriptionFile<T> cdf = new CreateDescriptionFile<T>(alg,imageType,"NEW");
-		cdf.directory(directory,imageSuffix,"SURF.txt");
-	}
-
-	public static void main( String args[] ) throws FileNotFoundException {
-		Class type = ImageFloat32.class;
-
-		doStuff("data/bikes/",".png",type);
-		doStuff("data/boat/",".png",type);
-		doStuff("data/graf/",".png",type);
-		doStuff("data/leuven/",".png",type);
-		doStuff("data/ubc/",".png",type);
-		doStuff("data/trees/",".png",type);
-		doStuff("data/wall/",".png",type);
-		doStuff("data/bark/",".png",type);
+		public Description() {
+		}
 	}
 }

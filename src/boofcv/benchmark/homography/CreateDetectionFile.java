@@ -17,11 +17,11 @@
  * limitations under the License.
  */
 
-package boofcv.benchmark.surf.homography;
+package boofcv.benchmark.homography;
 
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
-import boofcv.alg.feature.orientation.OrientationImage;
-import boofcv.alg.feature.orientation.OrientationIntegral;
+import boofcv.abst.feature.orientation.OrientationImage;
+import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
@@ -133,30 +133,4 @@ public class CreateDetectionFile<T extends ImageSingleBand> {
 		}
 		out.close();
 	}
-
-	public static <T extends ImageSingleBand>
-	void doStuff( String directory , String suffix , Class<T> imageType ) throws FileNotFoundException {
-		// below are the settings used for detect stability test
-		// graf image 1 with 2000 features
-		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(80, 1, -1, 1, 9,4,4);
-		// below is the settings used for describe stability test
-//		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(3, 1, -1, 1, 9, 4, 4);
-
-		CreateDetectionFile<T> cdf = new CreateDetectionFile<T>(alg,null,imageType,"FH");
-		cdf.directory(directory,suffix);
-	}
-
-	public static void main( String args[] ) throws FileNotFoundException {
-		Class imageType = ImageFloat32.class;
-		
-		doStuff("data/bikes/",".png",imageType);
-		doStuff("data/boat/",".png",imageType);
-		doStuff("data/graf/",".png",imageType);
-		doStuff("data/leuven/",".png",imageType);
-		doStuff("data/ubc/",".png",imageType);
-		doStuff("data/trees/",".png",imageType);
-		doStuff("data/wall/",".png",imageType);
-		doStuff("data/bark/",".png",imageType);
-	}
-
 }

@@ -17,18 +17,17 @@
  * limitations under the License.
  */
 
-package boofcv.benchmark.surf.homography;
+package boofcv.benchmark.homography;
 
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
+import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.struct.feature.SurfFeature;
 import boofcv.struct.feature.TupleDesc;
-import boofcv.struct.feature.TupleDesc_F64;
-import boofcv.struct.image.ImageBase;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 import georegression.struct.point.Point2D_F64;
@@ -46,15 +45,12 @@ import java.io.IOException;
 public class BenchmarkFeatureAllRuntime<T extends ImageSingleBand, D extends TupleDesc> {
 
 	Class<T> imageType;
-	InterestPointDetector<T> detectAlg;
-	DescribeRegionPoint<T,D> describeAlg;
+	DetectDescribePoint<T,D> alg;
 
 	public BenchmarkFeatureAllRuntime(Class<T> imageType,
-									  InterestPointDetector<T> detectAlg,
-									  DescribeRegionPoint<T,D> describeAlg ) {
+									  DetectDescribePoint<T,D> alg ) {
 		this.imageType = imageType;
-		this.detectAlg = detectAlg;
-		this.describeAlg = describeAlg;
+		this.alg = alg;
 	}
 
 	public void benchmark( String directory , int imageNumber )
@@ -72,23 +68,12 @@ public class BenchmarkFeatureAllRuntime<T extends ImageSingleBand, D extends Tup
 
 			long before = System.currentTimeMillis();
 
-			detectAlg.detect(input);
-			D desc = describeAlg.createDescription();
-			describeAlg.setImage(input);
-
-			int N = detectAlg.getNumberOfFeatures();
-			for( int j = 0; j < N; j++ ) {
-				Point2D_F64 p = detectAlg.getLocation(j);
-				double yaw = detectAlg.getOrientation(j);
-				double scale = detectAlg.getScale(j);
-
-				describeAlg.process(p.x, p.y, yaw, scale, desc);
-			}
+			alg.detect(input);
 
 			long after = System.currentTimeMillis();
 			long elapsed = after-before;
 
-			System.out.println("time = "+elapsed+" num detected "+ detectAlg.getNumberOfFeatures());
+			System.out.println("time = "+elapsed+" num detected "+ alg.getNumberOfFeatures());
 
 			if( elapsed < best )
 				best = elapsed;
@@ -96,21 +81,5 @@ public class BenchmarkFeatureAllRuntime<T extends ImageSingleBand, D extends Tup
 
 		System.out.println();
 		System.out.println("Best = "+best);
-	}
-
-	public static void main( String args[] ) throws IOException {
-
-		InterestPointDetector<ImageFloat32> detectAlg =
-				FactoryInterestPoint.fastHessian(80, 1, -1, 1, 9,4,4);
-
-		DescribeRegionPoint<ImageFloat32,SurfFeature> describeAlg =
-				FactoryDescribeRegionPoint.surf(true,ImageFloat32.class);
-//		DescribeRegionPoint<ImageFloat32> describeAlg =
-//				FactoryDescribeRegionPoint.surfm(true, ImageFloat32.class);
-
-		BenchmarkFeatureAllRuntime<ImageFloat32,SurfFeature> benchmark =
-				new BenchmarkFeatureAllRuntime<ImageFloat32,SurfFeature>(ImageFloat32.class,detectAlg,describeAlg);
-
-		benchmark.benchmark("data/graf", 1);
 	}
 }
