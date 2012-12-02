@@ -23,7 +23,6 @@ import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.benchmark.homography.CreateDetectionFile;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageSingleBand;
 
 import java.io.FileNotFoundException;
 
@@ -39,7 +38,7 @@ public class CreateDetectionFileSift {
 //		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(3, 1, -1, 1, 9, 4, 4);
 
 		CreateDetectionFile<ImageFloat32> cdf =
-				new CreateDetectionFile<ImageFloat32>(alg,null,ImageFloat32.class,"BSIFT");
+				new CreateDetectionFile<ImageFloat32>(alg,null,ImageFloat32.class,"BOOFCV_SIFT");
 		cdf.directory(directory,suffix);
 	}
 

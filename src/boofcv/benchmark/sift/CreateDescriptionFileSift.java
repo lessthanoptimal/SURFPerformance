@@ -20,14 +20,9 @@
 package boofcv.benchmark.sift;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
-import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.benchmark.homography.CreateDescriptionFile;
-import boofcv.factory.feature.describe.FactoryDescribeRegionPoint;
-import boofcv.factory.feature.detect.interest.FactoryDetectPoint;
-import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.struct.feature.SurfFeature;
 import boofcv.struct.image.ImageFloat32;
-import boofcv.struct.image.ImageSingleBand;
 
 import java.io.FileNotFoundException;
 
@@ -35,8 +30,6 @@ import java.io.FileNotFoundException;
  * @author Peter Abeles
  */
 public class CreateDescriptionFileSift {
-	// TODO implement with multiple orientations
-
 	public static void doStuff( String directory , String imageSuffix ) throws FileNotFoundException {
 
 		DescribeRegionPoint<ImageFloat32,SurfFeature> alg =
@@ -45,7 +38,7 @@ public class CreateDescriptionFileSift {
 		CreateDescriptionFile<ImageFloat32,SurfFeature> cdf =
 				new CreateDescriptionFile<ImageFloat32,SurfFeature>(alg,ImageFloat32.class,"BOOFCV_SIFT1");
 
-		cdf.directory(directory,imageSuffix,"BSIFT.txt");
+		cdf.directory(directory,imageSuffix,"FH.txt");//BOOFCV_SIFT
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {

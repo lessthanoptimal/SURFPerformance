@@ -171,6 +171,7 @@ public class BenchmarkFeatureDescribeStability {
 			fractions.add(fractionCorrect);
 			output.print(nameBase.get(i)+" ");
 			System.out.printf(" %5s %5d %5.2f\n",nameBase.get(i),numMatches,100*fractionCorrect);
+			System.gc();
 		}
 		output.println();
 
@@ -272,8 +273,8 @@ public class BenchmarkFeatureDescribeStability {
 		app.addDirectory("data/wall/");
 		app.addDirectory("data/bark/");
 
-//		app.evaluate("BOOFCV_SIFT1.txt");
-		app.evaluate("BOOFCV_SIFTN.txt");
+		app.evaluate("BOOFCV_SIFT1.txt");
+//		app.evaluate("BOOFCV_SIFTN.txt");
 //		app.evaluate("OpenSURF.txt");
 
 //		app.evaluate("SURF.txt");
