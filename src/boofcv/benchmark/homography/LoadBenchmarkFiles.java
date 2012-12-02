@@ -23,6 +23,7 @@ import boofcv.struct.feature.TupleDesc_F64;
 import bubo.io.serialization.SerializationDefinitionManager;
 import bubo.io.text.ReadCsvObjectSmart;
 import georegression.struct.homo.Homography2D_F32;
+import georegression.struct.homo.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
 import org.ejml.data.DenseMatrix64F;
 import org.ejml.ops.MatrixIO;
@@ -93,19 +94,19 @@ public class LoadBenchmarkFiles {
 		}
 	}
 
-	public static Homography2D_F32 loadHomography( String fileName ) {
+	public static Homography2D_F64 loadHomography( String fileName ) {
 		try {
 			DenseMatrix64F M = MatrixIO.loadCSV(fileName,3,3);
-			Homography2D_F32 H = new Homography2D_F32();
-			H.a11 = (float)M.get(0,0);
-			H.a12 = (float)M.get(0,1);
-			H.a13 = (float)M.get(0,2);
-			H.a21 = (float)M.get(1,0);
-			H.a22 = (float)M.get(1,1);
-			H.a23 = (float)M.get(1,2);
-			H.a31 = (float)M.get(2,0);
-			H.a32 = (float)M.get(2,1);
-			H.a33 = (float)M.get(2,2);
+			Homography2D_F64 H = new Homography2D_F64();
+			H.a11 = M.get(0,0);
+			H.a12 = M.get(0,1);
+			H.a13 = M.get(0,2);
+			H.a21 = M.get(1,0);
+			H.a22 = M.get(1,1);
+			H.a23 = M.get(1,2);
+			H.a31 = M.get(2,0);
+			H.a32 = M.get(2,1);
+			H.a33 = M.get(2,2);
 			return H;
 		} catch (IOException e) {
 			throw new RuntimeException(e);

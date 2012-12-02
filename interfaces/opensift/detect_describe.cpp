@@ -14,7 +14,7 @@ using namespace std;
 
 std::vector<string> imageNames;
 
-void process( IplImage *image , FILE *output)
+void process( IplImage *image , FILE *outDetect , FILE *outDesc)
 {
   // NOTE:  Need to comment out orientation and description lines from detection code
   //        or else the analysis will be messed up
@@ -26,17 +26,19 @@ void process( IplImage *image , FILE *output)
        SIFT_CURV_THR, 0, SIFT_DESCR_WIDTH,
        SIFT_DESCR_HIST_BINS );
 
-  fprintf(output,"%d\n",FEATURE_MAX_D);
+  fprintf(outDesc,"%d\n",FEATURE_MAX_D);
   // save detected points and description to a file
   for( int i = 0; i < N; i++ ) {
       struct feature &p = feat[i];
-      fprintf(output,"%7.3f %7.3f %7.5f",p.x,p.y,p.ori);
+      fprintf(outDesc,"%7.3f %7.3f %7.5f",p.x,p.y,p.ori);
       for( int j = 0; j < FEATURE_MAX_D; j++ ) {
-        fprintf(output," %0.10f",p.descr[j]);
+        fprintf(outDesc," %0.10f",p.descr[j]);
       }
-      fprintf(output,"\n");
+      fprintf(outDesc,"\n");
+      fprintf(outDetect,"%.3f %.3f %.5f %.5f\n",p.x,p.y,p.scl,p.ori);
   }
-  fclose(output);
+  fclose(outDesc);
+  fclose(outDetect);
 
   free(feat);
 
@@ -63,14 +65,21 @@ int main( int argc , char **argv )
         }
 
         sprintf(filename,"%s/DESCRIBE_img%d_%s.txt",nameDirectory,i,"OpenSIFT");
-        FILE *output = fopen(filename,"w");
-        if( output == NULL ) {
+        FILE *outDesc = fopen(filename,"w");
+        if( outDesc == NULL ) {
+            fprintf(stderr,"Couldn't open file: %s\n",filename);
+            throw std::runtime_error("Failed to open");
+        }
+
+        sprintf(filename,"%s/DETECTED_img%d_%s.txt",nameDirectory,i,"OpenSIFT");
+        FILE *outDetect = fopen(filename,"w");
+        if( outDetect == NULL ) {
             fprintf(stderr,"Couldn't open file: %s\n",filename);
             throw std::runtime_error("Failed to open");
         }
 
         printf("Processing %s\n",filename);
-        process(img,output);
+        process(img,outDetect,outDesc);
     }
 
 }

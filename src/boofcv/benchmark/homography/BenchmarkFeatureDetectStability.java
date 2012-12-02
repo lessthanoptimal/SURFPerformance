@@ -26,6 +26,8 @@ import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.struct.feature.TupleDesc_F64;
 import georegression.geometry.UtilPoint2D_F64;
 import georegression.struct.homo.Homography2D_F32;
+import georegression.struct.homo.Homography2D_F64;
+import georegression.struct.homo.UtilHomography;
 import georegression.struct.point.Point2D_F32;
 import georegression.transform.homo.HomographyPointOps_F32;
 
@@ -154,7 +156,9 @@ public class BenchmarkFeatureDetectStability {
 		transforms = new ArrayList<Homography2D_F32>();
 		for( int i=1; i < nameBase.size(); i++ ) {
 			String fileName = "H1to"+(i+1)+"p";
-			transforms.add( LoadBenchmarkFiles.loadHomography(directory+"/"+fileName));
+			Homography2D_F64 H64 = LoadBenchmarkFiles.loadHomography(directory+"/"+fileName);
+			Homography2D_F32 h = UtilHomography.convert(H64,(Homography2D_F32)null);
+			transforms.add(h);
 		}
 
 		List<DetectionInfo> detections[] = new ArrayList[nameBase.size()];
@@ -290,7 +294,8 @@ public class BenchmarkFeatureDetectStability {
 		app.addDirectory("data/wall/");
 		app.addDirectory("data/bark/");
 
-		app.evaluate("BSIFT");
+		app.evaluate("JavaSIFT");
+//		app.evaluate("BOOFCV_SIFT");
 //		app.evaluate("OpenSIFT");
 //		app.evaluate("FH");
 //		app.evaluate("PanOMatic");

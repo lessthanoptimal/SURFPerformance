@@ -33,11 +33,16 @@ import java.io.FileNotFoundException;
 public class CreateDescriptionFileSurf {
 	public static <T extends ImageSingleBand>
 	void doStuff( String directory , String imageSuffix , Class<T> imageType ) throws FileNotFoundException {
-		DescribeRegionPoint<T,SurfFeature> alg = FactorySurf.surf(true, imageType);
+		DescribeRegionPoint<T,SurfFeature> alg;
+		CreateDescriptionFile<T,SurfFeature> cdf;
 
-		CreateDescriptionFile<T,SurfFeature> cdf = new CreateDescriptionFile<T,SurfFeature>(alg,imageType,"BoofCV_MSURF");
+		alg = FactorySurf.surf(true, imageType);
+		cdf = new CreateDescriptionFile<T,SurfFeature>(alg,imageType,"BoofCV_MSURF");
+		cdf.directory(directory,imageSuffix,"SURF.txt");
 
-		cdf.directory(directory,imageSuffix,"FH.txt");
+		alg = FactorySurf.surf(false, imageType);
+		cdf = new CreateDescriptionFile<T,SurfFeature>(alg,imageType,"BoofCV_SURF");
+		cdf.directory(directory,imageSuffix,"SURF.txt");
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {

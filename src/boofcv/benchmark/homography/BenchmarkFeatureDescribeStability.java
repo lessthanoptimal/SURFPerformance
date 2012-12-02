@@ -26,11 +26,10 @@ import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.struct.FastQueue;
 import boofcv.struct.feature.AssociatedIndex;
 import boofcv.struct.feature.TupleDesc_F64;
-import georegression.geometry.UtilPoint2D_F32;
-import georegression.struct.homo.Homography2D_F32;
-import georegression.struct.point.Point2D_F32;
+import georegression.geometry.UtilPoint2D_F64;
+import georegression.struct.homo.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
-import georegression.transform.homo.HomographyPointOps_F32;
+import georegression.transform.homo.HomographyPointOps_F64;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -48,18 +47,23 @@ import java.util.List;
  */
 public class BenchmarkFeatureDescribeStability {
 	GeneralAssociation<TupleDesc_F64> assoc;
-	List<Homography2D_F32> transforms;
+	List<Homography2D_F64> transforms;
 	String imageSuffix;
 	double tolerance;
 
 	List<String> nameBase = new ArrayList<String>();
 
-	int numMatches;
-	double fractionCorrect;
+	int maxPossibleMatches;
+	int numTruePositive;
+	int numFalsePositive;
 
+	// the most it could have matched
 	int totalMatches;
 	int totalFeatures;
-	double totalCorrect;
+	double sumPrecision;
+	double sumRecall;
+	double sumFMeasure;
+
 
 	List<String> directories = new ArrayList<String>();
 
@@ -115,23 +119,31 @@ public class BenchmarkFeatureDescribeStability {
 		System.out.println("\n"+algSuffix);
 		output = new PrintStream("describe_stability_"+algSuffix);
 		output.println("tolerance = "+tolerance);
+		output.println("# rows = Max Matches | Precision | Recall | F-measure");
 		output.println();
 
-		totalCorrect = 0;
 		totalMatches = 0;
 		totalFeatures = 0;
+		sumPrecision = 0;
+		sumRecall = 0;
+		sumFMeasure = 0;
+
 		for( String dir : directories ) {
 			processDirectory(dir,algSuffix);
 		}
 
 		System.out.println("Summary Score:");
-		System.out.println("   num features  = "+totalFeatures);
-		System.out.println("   num matches   = "+totalMatches);
-		System.out.println("   total correct = "+totalCorrect);
+		System.out.println("   num features  = " + totalFeatures);
+		System.out.println("   max matches   = " + totalMatches);
+		System.out.println("   sumPrecision  = " + sumPrecision);
+		System.out.println("   sumRecall     = " + sumRecall);
+		System.out.println("   sumFMeasure   = " + sumFMeasure);
 		output.println("Summary Score:");
 		output.println("   num features  = " + totalFeatures);
-		output.println("   num matches   = " + totalMatches);
-		output.println("   total correct = " + totalCorrect);
+		output.println("   max matches   = " + totalMatches);
+		output.println("   sumPrecision  = " + sumPrecision);
+		output.println("   sumRecall     = " + sumRecall);
+		output.println("   sumFMeasure   = " + sumFMeasure);
 
 		output.close();
 	}
@@ -142,7 +154,7 @@ public class BenchmarkFeatureDescribeStability {
 
 		nameBase = loadNameBase( directory , imageSuffix );
 
-		transforms = new ArrayList<Homography2D_F32>();
+		transforms = new ArrayList<Homography2D_F64>();
 		for( int i=1; i < nameBase.size(); i++ ) {
 			String fileName = "H1to"+(i+1)+"p";
 			transforms.add( LoadBenchmarkFiles.loadHomography(directory+"/"+fileName));
@@ -152,8 +164,10 @@ public class BenchmarkFeatureDescribeStability {
 		// load descriptions in the keyframe
 		List<FeatureInfo> keyFrame = LoadBenchmarkFiles.loadDescription(descriptionName);
 
-		List<Integer> matches = new ArrayList<Integer>();
-		List<Double> fractions = new ArrayList<Double>();
+		List<Integer> listMaxPossible = new ArrayList<Integer>();
+		List<Double> listPrecision = new ArrayList<Double>();
+		List<Double> listRecall = new ArrayList<Double>();
+		List<Double> listFMeas = new ArrayList<Double>();
 
 		for( int i = 1; i < nameBase.size(); i++ ) {
 //			System.out.print("Examining "+nameBase.get(i));
@@ -161,25 +175,51 @@ public class BenchmarkFeatureDescribeStability {
 			descriptionName = directory+"DESCRIBE_"+nameBase.get(i)+"_"+algSuffix;
 			List<FeatureInfo> targetFrame = LoadBenchmarkFiles.loadDescription(descriptionName);
 
-			Homography2D_F32 keyToTarget = transforms.get(i-1);
+			Homography2D_F64 keyToTarget = transforms.get(i-1);
 
 			associationScore(keyFrame,targetFrame,keyToTarget);
-			totalCorrect += fractionCorrect;
-			totalMatches += numMatches;
+
+			double precision = numTruePositive/(double)(numTruePositive+numFalsePositive);
+			double recall = numTruePositive/(double)maxPossibleMatches;
+			double fmeas = 2*(precision*recall)/(precision + recall);
+
+			if( Double.isInfinite(precision) )
+				precision = 0;
+			if( Double.isInfinite(recall) )
+				recall = 0;
+			if( Double.isNaN(fmeas) )
+				fmeas = 0;
+
+			totalMatches += maxPossibleMatches;
 			totalFeatures += targetFrame.size();
-			matches.add(numMatches);
-			fractions.add(fractionCorrect);
+			sumPrecision += precision;
+			sumRecall += recall;
+			sumFMeasure += fmeas;
+
+			listMaxPossible.add(maxPossibleMatches);
+			listPrecision.add(precision);
+			listRecall.add(recall);
+			listFMeas.add(fmeas);
+
 			output.print(nameBase.get(i)+" ");
-			System.out.printf(" %5s %5d %5.2f\n",nameBase.get(i),numMatches,100*fractionCorrect);
+			System.out.printf(" %5s %5d %5.2f\n",nameBase.get(i), maxPossibleMatches,fmeas);
 			System.gc();
 		}
 		output.println();
 
-		for( int m : matches ) {
+		for( int m : listMaxPossible ) {
 			output.print(m+" ");
 		}
 		output.println();
-		for( double f : fractions ) {
+		for( double f : listPrecision ) {
+			output.printf("%6.4f ", f);
+		}
+		output.println();
+		for( double f : listRecall ) {
+			output.printf("%6.4f ", f);
+		}
+		output.println();
+		for( double f : listFMeas ) {
 			output.printf("%6.4f ", f);
 		}
 		output.println();
@@ -193,7 +233,7 @@ public class BenchmarkFeatureDescribeStability {
 	 */
 	private void associationScore(List<FeatureInfo> keyFrame,
 								  List<FeatureInfo> targetFrame,
-								  Homography2D_F32 keyToTarget) {
+								  Homography2D_F64 keyToTarget) {
 
 		FastQueue<TupleDesc_F64> listSrc = new FastQueue<TupleDesc_F64>(keyFrame.size(),TupleDesc_F64.class,false);
 		FastQueue<TupleDesc_F64> listDst = new FastQueue<TupleDesc_F64>(keyFrame.size(),TupleDesc_F64.class,false);
@@ -212,44 +252,56 @@ public class BenchmarkFeatureDescribeStability {
 
 		FastQueue<AssociatedIndex> matches = assoc.getMatches();
 
-		Point2D_F32 src = new Point2D_F32();
-		Point2D_F32 expected = new Point2D_F32();
+		Point2D_F64 expected = new Point2D_F64();
 
-		// the number of key frame features which have a correspondence
-		int maxCorrect = 0;
+
 		// number of correct associations
-		int numCorrect = 0;
+		numTruePositive = 0;
+		numFalsePositive = 0;
 
 		for( int i = 0; i < matches.size; i++ ) {
 			AssociatedIndex a = matches.get(i);
 			Point2D_F64 s = keyFrame.get(a.src).getLocation();
 			Point2D_F64 d = targetFrame.get(a.dst).getLocation();
 
-			src.set((float)s.x,(float)s.y);
+			HomographyPointOps_F64.transform(keyToTarget, s, expected);
 
-			HomographyPointOps_F32.transform(keyToTarget, src, expected);
-
-			double dist = UtilPoint2D_F32.distance(expected.x,expected.y,(float)d.x,(float)d.y);
+			double dist = UtilPoint2D_F64.distance(expected.x, expected.y, (float) d.x, (float) d.y);
 
 			if( dist <= tolerance ) {
-				numCorrect++;
-				maxCorrect++;
+				numTruePositive++;
 			} else {
-				if( hasCorrespondence(expected,targetFrame)) {
-					maxCorrect++;
-				}
+				numFalsePositive++;
 			}
 		}
 
-		numMatches = maxCorrect;
-		fractionCorrect = ((double)numCorrect)/((double)maxCorrect);
+		maxPossibleMatches = computeMaxPossibleMatches(keyFrame,targetFrame,keyToTarget);
 	}
 
-	private boolean hasCorrespondence( Point2D_F32 expected, List<FeatureInfo> targetFrame) {
+	private int computeMaxPossibleMatches( List<FeatureInfo> keyFrame,
+										   List<FeatureInfo> targetFrame,
+										   Homography2D_F64 keyToTarget )
+	{
+		int total = 0;
+
+		Point2D_F64 expected = new Point2D_F64();
+
+		for( FeatureInfo a : keyFrame ) {
+			HomographyPointOps_F64.transform(keyToTarget, a.location, expected);
+
+			if( hasCorrespondence(expected,targetFrame) ) {
+				total++;
+			}
+		}
+
+		return total;
+	}
+
+	private boolean hasCorrespondence( Point2D_F64 expected, List<FeatureInfo> targetFrame) {
 
 		for( FeatureInfo t : targetFrame ) {
 			Point2D_F64 d = t.getLocation();
-			double dist = UtilPoint2D_F32.distance(expected.x,expected.y,(float)d.x,(float)d.y);
+			double dist = UtilPoint2D_F64.distance(expected.x,expected.y,(float)d.x,(float)d.y);
 			if( dist <= tolerance)
 				return true;
 		}
@@ -260,7 +312,8 @@ public class BenchmarkFeatureDescribeStability {
 		double tolerance = 3;
 
 		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
-		GeneralAssociation<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, -1, true);
+		// No backwards validation.  Want to show strength of descriptor and post processing validation
+		GeneralAssociation<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, -1, false);
 
 		BenchmarkFeatureDescribeStability app = new BenchmarkFeatureDescribeStability(assoc,".png",tolerance);
 
@@ -273,18 +326,18 @@ public class BenchmarkFeatureDescribeStability {
 		app.addDirectory("data/wall/");
 		app.addDirectory("data/bark/");
 
-		app.evaluate("BOOFCV_SIFT1.txt");
+//		app.evaluate("JavaSIFT.txt");
+//		app.evaluate("BOOFCV_SIFT1.txt");
 //		app.evaluate("BOOFCV_SIFTN.txt");
-//		app.evaluate("OpenSURF.txt");
+//		app.evaluate("OpenSIFT.txt");
 
 //		app.evaluate("SURF.txt");
-//		app.evaluate("JavaSURF.txt");
+		app.evaluate("JavaSURF.txt");
 //		app.evaluate("PanOMatic.txt");
-//		app.evaluate("JOpenSURF.txt");
+		app.evaluate("JOpenSURF.txt");
 //		app.evaluate("OpenSURF.txt");
-//		app.evaluate("OpenCV_SURF.txt");
-//		app.evaluate("BoofCV_SURF.txt");
-
+		app.evaluate("OpenCV_SURF.txt");
+		app.evaluate("BoofCV_SURF.txt");
 //		app.evaluate("BoofCV_MSURF.txt");
 
 	}
