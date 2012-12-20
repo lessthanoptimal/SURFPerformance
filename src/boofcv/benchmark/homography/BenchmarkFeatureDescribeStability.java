@@ -19,7 +19,7 @@
 
 package boofcv.benchmark.homography;
 
-import boofcv.abst.feature.associate.GeneralAssociation;
+import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
 import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.factory.feature.associate.FactoryAssociation;
@@ -46,7 +46,7 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class BenchmarkFeatureDescribeStability {
-	GeneralAssociation<TupleDesc_F64> assoc;
+	AssociateDescription<TupleDesc_F64> assoc;
 	List<Homography2D_F64> transforms;
 	String imageSuffix;
 	double tolerance;
@@ -69,7 +69,7 @@ public class BenchmarkFeatureDescribeStability {
 
 	PrintStream output;
 
-	public BenchmarkFeatureDescribeStability(GeneralAssociation<TupleDesc_F64> assoc,
+	public BenchmarkFeatureDescribeStability(AssociateDescription<TupleDesc_F64> assoc,
 											 String imageSuffix,
 											 double tolerance) {
 
@@ -313,7 +313,7 @@ public class BenchmarkFeatureDescribeStability {
 
 		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
 		// No backwards validation.  Want to show strength of descriptor and post processing validation
-		GeneralAssociation<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, -1, false);
+		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, -1, false);
 
 		BenchmarkFeatureDescribeStability app = new BenchmarkFeatureDescribeStability(assoc,".png",tolerance);
 
@@ -328,16 +328,18 @@ public class BenchmarkFeatureDescribeStability {
 
 //		app.evaluate("JavaSIFT.txt");
 //		app.evaluate("BOOFCV_SIFT1.txt");
+//		app.evaluate("OpenIMAJ_SIFT.txt");
 //		app.evaluate("BOOFCV_SIFTN.txt");
 //		app.evaluate("OpenSIFT.txt");
+		app.evaluate("SIFT_REFERENCE.txt");
 
 //		app.evaluate("SURF.txt");
-		app.evaluate("JavaSURF.txt");
+//		app.evaluate("JavaSURF.txt");
 //		app.evaluate("PanOMatic.txt");
-		app.evaluate("JOpenSURF.txt");
+//		app.evaluate("JOpenSURF.txt");
 //		app.evaluate("OpenSURF.txt");
-		app.evaluate("OpenCV_SURF.txt");
-		app.evaluate("BoofCV_SURF.txt");
+//		app.evaluate("OpenCV_SURF.txt");
+//		app.evaluate("BoofCV_SURF.txt");
 //		app.evaluate("BoofCV_MSURF.txt");
 
 	}

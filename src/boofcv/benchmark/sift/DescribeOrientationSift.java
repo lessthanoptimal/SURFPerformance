@@ -85,6 +85,8 @@ public class DescribeOrientationSift
 		angle = orientation.getPeakOrientation();
 		describe.process(x,y,scale,angle,
 				orientation.getImageIndex(),orientation.getPixelScale(), ret);
+
+//		describe.process(x,y,scale,-angle, ret);
 		return ret;
 	}
 

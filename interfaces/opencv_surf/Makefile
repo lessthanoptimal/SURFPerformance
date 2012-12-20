@@ -19,4 +19,5 @@ runtime: runtime_all_opencv.o
 $(DETECT): detect_opencv.o
 	$(CC) $(LDFLAGS) -o $(DETECT) detect_opencv.o $(CPPFLAGS)
 
-clean: rm -f *~ *.o $(TARG) $(DETECT) runtime
+clean:
+	rm -f *~ *.o $(TARG) $(DETECT) runtime

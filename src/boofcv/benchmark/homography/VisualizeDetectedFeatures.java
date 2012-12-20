@@ -32,9 +32,9 @@ import java.util.List;
 public class VisualizeDetectedFeatures {
 	public static void main( String args[] ) {
 
-		display("data/trees", "img1", "BSIFT");
-		display("data/trees", "img2", "BSIFT");
-		display("data/trees", "img3", "BSIFT");
+		display("data/bikes", "img1", "SIFT_REFERENCE");
+		display("data/bikes", "img2", "SIFT_REFERENCE");
+		display("data/bikes", "img3", "SIFT_REFERENCE");
 //		display("data/trees", "img2", "OpenSIFT");
 
 //		display("data/trees", "img1", "PanOMatic");

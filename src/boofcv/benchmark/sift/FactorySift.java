@@ -21,11 +21,13 @@ package boofcv.benchmark.sift;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
+import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.alg.feature.describe.DescribePointSift;
 import boofcv.alg.feature.detect.interest.SiftImageScaleSpace;
 import boofcv.alg.feature.orientation.OrientationHistogramSift;
 import boofcv.factory.feature.describe.FactoryDescribePointAlgs;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
+import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.struct.feature.SurfFeature;
 import boofcv.struct.image.ImageFloat32;
 
@@ -36,15 +38,20 @@ public class FactorySift {
 
 	public static DescribeRegionPoint<ImageFloat32,SurfFeature>
 	createDescriptor() {
-		SiftImageScaleSpace ss = new SiftImageScaleSpace(1.6f, 5, 4, false);
+		SiftImageScaleSpace ss = new SiftImageScaleSpace(1.6f, 6, 5, false);
 		OrientationHistogramSift orientation = new OrientationHistogramSift(32,2.5,1.5);
 		DescribePointSift sift = FactoryDescribePointAlgs.sift(4, 8, 8);
 
 		return new DescribeOrientationSift(orientation,sift,ss);
 	}
 
+	public static InterestPointDetector<ImageFloat32>
+	createDetector() {
+		return FactoryInterestPoint.siftDetector(1.6f, 5, 4, false, 3,5, -1, 10);
+	}
+
 	public static DetectDescribePoint<ImageFloat32,SurfFeature>
 	detectDescribe() {
-		return FactoryDetectDescribe.sift(1.6,5,4,false,3, 5, -1 , 10,32);
+		return FactoryDetectDescribe.sift(1.6,5,4,false,3, 10, -1 , 5,32);
 	}
 }

@@ -21,7 +21,6 @@ package boofcv.benchmark.sift;
 
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.benchmark.homography.CreateDetectionFile;
-import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
 import boofcv.struct.image.ImageFloat32;
 
 import java.io.FileNotFoundException;
@@ -31,11 +30,7 @@ import java.io.FileNotFoundException;
  */
 public class CreateDetectionFileSift {
 	public static void doStuff( String directory , String suffix ) throws FileNotFoundException {
-		// below are the settings used for detect stability test
-		// graf image 1 with 2000 features
-		InterestPointDetector<ImageFloat32> alg = FactoryInterestPoint.siftDetector(1.6, 5, 4, false, 3, 5, -1 , 10);
-		// below is the settings used for describe stability test
-//		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(3, 1, -1, 1, 9, 4, 4);
+		InterestPointDetector<ImageFloat32> alg = FactorySift.createDetector();
 
 		CreateDetectionFile<ImageFloat32> cdf =
 				new CreateDetectionFile<ImageFloat32>(alg,null,ImageFloat32.class,"BOOFCV_SIFT");

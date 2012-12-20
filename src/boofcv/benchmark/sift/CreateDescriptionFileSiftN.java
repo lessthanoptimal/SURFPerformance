@@ -67,7 +67,7 @@ public class CreateDescriptionFileSiftN extends CreateDescriptionFile<ImageFloat
 		CreateDescriptionFileSiftN cdf =
 				new CreateDescriptionFileSiftN("BOOFCV_SIFTN");
 
-		cdf.directory(directory,imageSuffix,"BOOFCV_SIFT.txt");
+		cdf.directory(directory,imageSuffix,"OpenIMAJ_SIFT.txt");
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {

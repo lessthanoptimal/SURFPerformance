@@ -1,6 +1,8 @@
 #include "cv.h"
 #include "opencv2/core/core.hpp"
 #include "opencv2/features2d/features2d.hpp"
+#include <opencv2/nonfree/features2d.hpp>
+#include <opencv2/nonfree/nonfree.hpp>
 #include <highgui.h>
 #include <ctime>
 #include <iostream>
@@ -54,10 +56,6 @@ void process( Mat image , FILE *fid , FILE *output)
     // Extract the descriptors for the ipts
     Mat descriptors;
     extractor.compute( image, ipts, descriptors );
-
-//    printf("descriptors shape: rows = %d cols = %d\n",descriptors.rows,descriptors.cols);
-//    printf("dims = %d  type = %d  channels = %d\n",descriptors.dims,descriptors.type(),descriptors.channels());
-//    printf("CV_64FC1 %d  CV_32FC1 %d\n",CV_64FC1,CV_32FC1);
 
     // output the description
     fprintf(output,"64\n");

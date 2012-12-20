@@ -19,7 +19,7 @@
 
 package boofcv.benchmark.homography;
 
-import boofcv.abst.feature.associate.GeneralAssociation;
+import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
 import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.factory.feature.associate.FactoryAssociation;
@@ -49,7 +49,7 @@ import java.util.List;
  * @author Peter Abeles
  */
 public class BenchmarkFeatureDetectStability {
-	GeneralAssociation<TupleDesc_F64> assoc;
+	AssociateDescription<TupleDesc_F64> assoc;
 	List<Homography2D_F32> transforms;
 	String imageSuffix;
 	double tolerance;
@@ -74,7 +74,7 @@ public class BenchmarkFeatureDetectStability {
 	int width;
 	int height;
 
-	public BenchmarkFeatureDetectStability(GeneralAssociation<TupleDesc_F64> assoc,
+	public BenchmarkFeatureDetectStability(AssociateDescription<TupleDesc_F64> assoc,
 										   String imageSuffix,
 										   double tolerance) {
 
@@ -281,7 +281,7 @@ public class BenchmarkFeatureDetectStability {
 		double tolerance = 1.5;
 
 		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
-		GeneralAssociation<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, -1, true);
+		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, -1, true);
 
 		BenchmarkFeatureDetectStability app = new BenchmarkFeatureDetectStability(assoc,".png",tolerance);
 
@@ -294,14 +294,16 @@ public class BenchmarkFeatureDetectStability {
 		app.addDirectory("data/wall/");
 		app.addDirectory("data/bark/");
 
-		app.evaluate("JavaSIFT");
-//		app.evaluate("BOOFCV_SIFT");
+//		app.evaluate("JavaSIFT");
+//		app.evaluate("OpenIMAJ_SIFT");
+		app.evaluate("BOOFCV_SIFT");
 //		app.evaluate("OpenSIFT");
+
 //		app.evaluate("FH");
 //		app.evaluate("PanOMatic");
 //		app.evaluate("OpenSURF");
 //		app.evaluate("OpenCV");
-//		app.evaluate("SURF");
+//		app.evaluate("SURF_REFERENCE");
 //		app.evaluate("JOpenSURF");
 //		app.evaluate("JavaSURF");
 	}

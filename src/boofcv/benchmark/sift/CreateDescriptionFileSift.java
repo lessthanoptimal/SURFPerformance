@@ -38,7 +38,7 @@ public class CreateDescriptionFileSift {
 		CreateDescriptionFile<ImageFloat32,SurfFeature> cdf =
 				new CreateDescriptionFile<ImageFloat32,SurfFeature>(alg,ImageFloat32.class,"BOOFCV_SIFT1");
 
-		cdf.directory(directory,imageSuffix,"BOOFCV_SIFT.txt");
+		cdf.directory(directory,imageSuffix,"OpenIMAJ_SIFT.txt");
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {

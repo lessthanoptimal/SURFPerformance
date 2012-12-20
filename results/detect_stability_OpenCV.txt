@@ -36,4 +36,4 @@ img2 img3 img4 img5 img6
 Summary Score:
    num matches     = 89292
    total correct   = 10.104564894137681
-   total ambiguous = 3.4243645636431257
+   total ambiguous = 3.3637877741352558
