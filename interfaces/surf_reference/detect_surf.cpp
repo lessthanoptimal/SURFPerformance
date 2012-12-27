@@ -23,9 +23,9 @@ void process( Image *image , FILE *output)
     // detect the features
     std::vector<Ipoint> ipts;
     // parameters used to generate detections for descriptor evaluation
-    FastHessian detector(&iimage,ipts,0.6,false,9,1,4);
+    //FastHessian detector(&iimage,ipts,0.6,false,9,1,4);
     // parameters used for detect stability benchmark
-    //FastHessian detector(&iimage,ipts,6.5,false,9,1,4);
+    FastHessian detector(&iimage,ipts,6.5,false,9,1,4);
     detector.getInterestPoints();
 
     // save detected points to a file
@@ -58,7 +58,7 @@ int main( int argc , char **argv )
             throw std::runtime_error("Failed to open");
         }
 
-        sprintf(filename,"%s/DETECTED_img%d_%s.txt",nameDirectory,i,"SURF");
+        sprintf(filename,"%s/DETECTED_img%d_%s.txt",nameDirectory,i,"SURF_REFERENCE");
         FILE *output = fopen(filename,"w");
         if( output == NULL ) {
             fprintf(stderr,"Couldn't open file: %s\n",filename);

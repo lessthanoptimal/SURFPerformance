@@ -97,7 +97,7 @@ int main( int argc , char **argv )
             throw std::runtime_error("Failed to open");
         }
 
-        sprintf(filename,"%s/DESCRIBE_img%d_%s.txt",nameDirectory,i,"SURF");
+        sprintf(filename,"%s/DESCRIBE_img%d_%s.txt",nameDirectory,i,"SURF_REFERENCE");
         FILE *output = fopen(filename,"w");
         if( fid == NULL ) {
             fprintf(stderr,"Couldn't open file: %s\n",filename);
