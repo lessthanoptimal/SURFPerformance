@@ -329,9 +329,10 @@ public class BenchmarkFeatureDescribeStability {
 //		app.evaluate("JavaSIFT.txt");
 //		app.evaluate("BOOFCV_SIFT1.txt");
 //		app.evaluate("OpenIMAJ_SIFT.txt");
+		app.evaluate("VLFeat_SIFT.txt");
 //		app.evaluate("BOOFCV_SIFTN.txt");
 //		app.evaluate("OpenSIFT.txt");
-		app.evaluate("SIFT_REFERENCE.txt");
+//		app.evaluate("SIFT_REFERENCE.txt");
 
 //		app.evaluate("SURF.txt");
 //		app.evaluate("JavaSURF.txt");

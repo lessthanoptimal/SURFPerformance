@@ -17,14 +17,10 @@ for i in range(1,7):
     fin = open('temp.txt','r')
     fout = open(sys.argv[1]+'/DESCRIBE_img'+str(i)+'_'+libname+'.txt','w')
 
-    os.system('cp temp.txt foo.txt')
-
     # Read the number of features in the file
     N = int(fin.readline().split(' ')[0])
 
     fout.write('128\n')
-
-    numBad = 0
 
     for j in range(N):
         desc = [ float(w) for w in fin.readline()[:-1].split(' ') ]

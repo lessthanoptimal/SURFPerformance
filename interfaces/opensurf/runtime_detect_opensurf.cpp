@@ -20,7 +20,7 @@ void process( IplImage *image )
         clock_t start = clock();
 
         std::vector<Ipoint> ipts;
-        FastHessian detector(ipts,4,4,1,0.0013f);
+        FastHessian detector(ipts,4,4,1,0.00095f);
 
         // convert the image into an integral image
         IplImage *int_img = Integral(image);
