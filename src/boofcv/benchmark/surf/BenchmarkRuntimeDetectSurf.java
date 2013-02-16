@@ -19,6 +19,7 @@
 
 package boofcv.benchmark.surf;
 
+import boofcv.abst.feature.detect.interest.ConfigFastHessian;
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.benchmark.homography.BenchmarkFeatureDetectRuntime;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
@@ -32,7 +33,9 @@ import java.io.IOException;
 public class BenchmarkRuntimeDetectSurf {
 	public static void main( String args[] ) throws IOException {
 
-		InterestPointDetector<ImageFloat32> alg = FactoryInterestPoint.fastHessian(100, 2, -1, 1, 9, 4, 4);
+		InterestPointDetector<ImageFloat32> alg = FactoryInterestPoint.
+				fastHessian(new ConfigFastHessian(100, 2, -1, 1, 9, 4, 4));
+
 
 		BenchmarkFeatureDetectRuntime<ImageFloat32> benchmark =
 				new BenchmarkFeatureDetectRuntime<ImageFloat32>(ImageFloat32.class,alg);

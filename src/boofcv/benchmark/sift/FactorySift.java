@@ -19,8 +19,10 @@
 
 package boofcv.benchmark.sift;
 
+import boofcv.abst.feature.describe.ConfigSiftScaleSpace;
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
+import boofcv.abst.feature.detect.interest.ConfigSiftDetector;
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.alg.feature.describe.DescribePointSift;
 import boofcv.alg.feature.detect.interest.SiftImageScaleSpace;
@@ -40,18 +42,20 @@ public class FactorySift {
 	createDescriptor() {
 		SiftImageScaleSpace ss = new SiftImageScaleSpace(1.6f, 6, 5, false);
 		OrientationHistogramSift orientation = new OrientationHistogramSift(32,2.5,1.5);
-		DescribePointSift sift = FactoryDescribePointAlgs.sift(4, 8, 8);
+		DescribePointSift sift = FactoryDescribePointAlgs.sift(null);
 
 		return new DescribeOrientationSift(orientation,sift,ss);
 	}
 
 	public static InterestPointDetector<ImageFloat32>
 	createDetector() {
-		return FactoryInterestPoint.siftDetector(1.6f, 5, 4, false, 3,5, -1, 10);
+		return FactoryInterestPoint.siftDetector(null,new ConfigSiftDetector(3,5, -1, 10));
 	}
 
 	public static DetectDescribePoint<ImageFloat32,SurfFeature>
 	detectDescribe() {
-		return FactoryDetectDescribe.sift(1.6,5,4,false,3, 10, -1 , 5,32);
+		ConfigSiftScaleSpace confSS = new ConfigSiftScaleSpace(1.6f,5,4,false);
+
+		return FactoryDetectDescribe.sift(confSS,new ConfigSiftDetector(3,10, -1, 32),null,null);
 	}
 }

@@ -107,7 +107,7 @@ public class VisualizeAssociatedFeatures {
 		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
 
 		// No backwards validation.  Want to show strength of descriptor and post processing validation
-		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, -1, false);
+		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, false);
 
 		VisualizeAssociatedFeatures app = new VisualizeAssociatedFeatures(assoc,"data/bikes/",
 				"SIFT_REFERENCE","img1","img2");

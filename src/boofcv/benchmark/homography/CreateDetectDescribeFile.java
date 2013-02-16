@@ -112,7 +112,7 @@ public class CreateDetectDescribeFile<T extends ImageSingleBand, D extends Tuple
 		PrintStream outDetect = new PrintStream(new FileOutputStream(detectName));
 		PrintStream outDescribe = new PrintStream(new FileOutputStream(describeName));
 
-		TupleDesc_F64 desc = alg.getDescriptor(0);
+		TupleDesc_F64 desc = alg.getDescription(0);
 
 		outDescribe.printf("%d\n", desc.size());
 
@@ -122,7 +122,7 @@ public class CreateDetectDescribeFile<T extends ImageSingleBand, D extends Tuple
 			double yaw = alg.getOrientation(i);
 			outDetect.printf("%.3f %.3f %.5f %.5f\n", pt.getX(), pt.getY(), scale, yaw);
 
-			desc = alg.getDescriptor(i);
+			desc = alg.getDescription(i);
 			outDescribe.printf("%.3f %.3f %f",pt.getX(), pt.getY(),yaw);
 			for( int j = 0; j < desc.value.length; j++ ) {
 				outDescribe.printf(" %.10f",desc.value[j]);

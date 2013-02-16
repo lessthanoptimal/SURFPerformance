@@ -281,7 +281,7 @@ public class BenchmarkFeatureDetectStability {
 		double tolerance = 1.5;
 
 		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
-		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, -1, true);
+		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, true);
 
 		BenchmarkFeatureDetectStability app = new BenchmarkFeatureDetectStability(assoc,".png",tolerance);
 
@@ -299,7 +299,7 @@ public class BenchmarkFeatureDetectStability {
 		app.evaluate("BOOFCV_SIFT");
 //		app.evaluate("OpenSIFT");
 
-//		app.evaluate("FH");
+		app.evaluate("FH");
 //		app.evaluate("PanOMatic");
 //		app.evaluate("OpenSURF");
 //		app.evaluate("OpenCV");

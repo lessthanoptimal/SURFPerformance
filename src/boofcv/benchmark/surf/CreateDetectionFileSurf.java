@@ -19,6 +19,7 @@
 
 package boofcv.benchmark.surf;
 
+import boofcv.abst.feature.detect.interest.ConfigFastHessian;
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.benchmark.homography.CreateDetectionFile;
 import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
@@ -36,9 +37,9 @@ public class CreateDetectionFileSurf {
 	void doStuff( String directory , String suffix , Class<T> imageType ) throws FileNotFoundException {
 		// below are the settings used for detect stability test
 		// graf image 1 with 2000 features
-		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(80, 1, -1, 1, 9, 4, 4);
+		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(new ConfigFastHessian(80,1,-1,1,9,4,4));
 		// below is the settings used for describe stability test
-//		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(3, 1, -1, 1, 9, 4, 4);
+//		InterestPointDetector<T> alg = FactoryInterestPoint.fastHessian(3, 2, -1, 1, 9, 4, 4);
 
 		CreateDetectionFile<T> cdf = new CreateDetectionFile<T>(alg,null,imageType,"FH");
 		cdf.directory(directory,suffix);

@@ -313,7 +313,7 @@ public class BenchmarkFeatureDescribeStability {
 
 		ScoreAssociation score = new ScoreAssociateEuclideanSq_F64();
 		// No backwards validation.  Want to show strength of descriptor and post processing validation
-		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, -1, false);
+		AssociateDescription<TupleDesc_F64> assoc = FactoryAssociation.greedy(score, Double.MAX_VALUE, false);
 
 		BenchmarkFeatureDescribeStability app = new BenchmarkFeatureDescribeStability(assoc,".png",tolerance);
 
@@ -329,8 +329,8 @@ public class BenchmarkFeatureDescribeStability {
 //		app.evaluate("JavaSIFT.txt");
 //		app.evaluate("BOOFCV_SIFT1.txt");
 //		app.evaluate("OpenIMAJ_SIFT.txt");
-		app.evaluate("VLFeat_SIFT.txt");
-//		app.evaluate("BOOFCV_SIFTN.txt");
+//		app.evaluate("VLFeat_SIFT.txt");
+		app.evaluate("BOOFCV_SIFTN.txt");
 //		app.evaluate("OpenSIFT.txt");
 //		app.evaluate("SIFT_REFERENCE.txt");
 

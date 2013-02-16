@@ -123,7 +123,7 @@ public class DescribeOrientationSift
 	}
 
 	@Override
-	public Class<SurfFeature> getDescriptorType() {
+	public Class<SurfFeature> getDescriptionType() {
 		return SurfFeature.class;
 	}
 }

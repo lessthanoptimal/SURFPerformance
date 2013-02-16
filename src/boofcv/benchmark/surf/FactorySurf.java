@@ -22,15 +22,13 @@ package boofcv.benchmark.surf;
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.abst.feature.describe.WrapDescribeSurf;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
-import boofcv.abst.feature.detdesc.WrapDetectDescribeSurf;
-import boofcv.abst.feature.detect.extract.FeatureExtractor;
+import boofcv.abst.feature.detect.interest.ConfigFastHessian;
+import boofcv.abst.feature.orientation.ConfigSlidingIntegral;
 import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.alg.feature.describe.DescribePointSurf;
-import boofcv.alg.feature.detect.interest.FastHessianFeatureDetector;
 import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.factory.feature.describe.FactoryDescribePointAlgs;
-import boofcv.factory.feature.detect.extract.FactoryFeatureExtractor;
-import boofcv.factory.feature.orientation.FactoryOrientation;
+import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.struct.feature.SurfFeature;
 import boofcv.struct.image.ImageSingleBand;
@@ -49,7 +47,8 @@ public class FactorySurf {
 		Class<II> integralType = GIntegralImageOps.getIntegralType(imageType);
 
 		if( isOriented )
-			orientation = FactoryOrientationAlgs.sliding_ii(0.65, Math.PI / 3.0, 8, -1, 6, integralType);
+			orientation = FactoryOrientationAlgs.
+					sliding_ii(new ConfigSlidingIntegral(0.65, Math.PI / 3.0, 8, -1, 6), integralType);
 
 		DescribePointSurf<II> alg = new DescribePointSurfPanOMatic<II>(integralType);
 		return new WrapDescribeSurf<T,II>( alg );
@@ -59,40 +58,34 @@ public class FactorySurf {
 	 * Creates a BoofCV SURF descriptor
 	 */
 	public static <T extends ImageSingleBand, II extends ImageSingleBand>
-	DescribeRegionPoint<T,SurfFeature> surf( boolean modified , Class<T> imageType )
+	DescribeRegionPoint<T,SurfFeature> surf( boolean stable , Class<T> imageType )
 	{
 		Class integralType = GIntegralImageOps.getIntegralType(imageType);
 
 		DescribePointSurf<II> describe;
-		OrientationIntegral<II> orientation =
-				FactoryOrientation.surfDefault(modified, integralType);
+		OrientationIntegral<II> orientation;
+		if( stable )
+			orientation = FactoryOrientationAlgs.sliding_ii(null,integralType);
+		else
+			orientation = FactoryOrientationAlgs.average_ii(null,integralType);
 
-		if( modified ) {
-			describe = FactoryDescribePointAlgs.msurf(integralType);
+		if( stable ) {
+			describe = FactoryDescribePointAlgs.surfStability(null,integralType);
 		} else {
-			describe = FactoryDescribePointAlgs.surf(integralType);
+			describe = FactoryDescribePointAlgs.surfSpeed(null,integralType);
 		}
 
 		return new DescribeOrientationSurf<T,II>(orientation,describe);
 	}
 
 	public static <T extends ImageSingleBand, II extends ImageSingleBand>
-	DetectDescribePoint<T,SurfFeature> detectDescribe( boolean modified , Class<T> imageType) {
-		Class integralType = GIntegralImageOps.getIntegralType(imageType);
+	DetectDescribePoint<T,SurfFeature> detectDescribe( boolean stable , Class<T> imageType) {
 
-		DescribePointSurf<II> describe;
-		OrientationIntegral<II> orientation =
-				FactoryOrientation.surfDefault(modified, integralType);
+		ConfigFastHessian configDetect = new ConfigFastHessian(3, 58, -1,1, 9, 4, 4);
 
-		if( modified ) {
-			describe = FactoryDescribePointAlgs.msurf(integralType);
-		} else {
-			describe = FactoryDescribePointAlgs.surf(integralType);
-		}
-
-		FeatureExtractor extractor = FactoryFeatureExtractor.nonmax(1, 80, 5, true);
-		FastHessianFeatureDetector<II> detector = new FastHessianFeatureDetector<II>(extractor, -1, 1, 9, 4, 4);
-
-		return new WrapDetectDescribeSurf<T,II>(detector, orientation,describe);
+		if( stable )
+			return FactoryDetectDescribe.surfStable(configDetect,null,null,imageType);
+		else
+			return FactoryDetectDescribe.surfFast(configDetect,null,null,imageType);
 	}
 }

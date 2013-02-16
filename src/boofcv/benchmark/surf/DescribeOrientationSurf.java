@@ -96,7 +96,7 @@ public class DescribeOrientationSurf<T extends ImageSingleBand, II extends Image
 	}
 
 	@Override
-	public Class<SurfFeature> getDescriptorType() {
+	public Class<SurfFeature> getDescriptionType() {
 		return SurfFeature.class;
 	}
 }
