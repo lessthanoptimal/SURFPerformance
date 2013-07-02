@@ -296,7 +296,7 @@ public class BenchmarkFeatureDetectStability {
 
 //		app.evaluate("JavaSIFT");
 //		app.evaluate("OpenIMAJ_SIFT");
-		app.evaluate("BOOFCV_SIFT");
+//		app.evaluate("BOOFCV_SIFT");
 //		app.evaluate("OpenSIFT");
 
 		app.evaluate("FH");

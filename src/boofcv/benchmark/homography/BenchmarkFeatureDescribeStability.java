@@ -318,7 +318,7 @@ public class BenchmarkFeatureDescribeStability {
 		BenchmarkFeatureDescribeStability app = new BenchmarkFeatureDescribeStability(assoc,".png",tolerance);
 
 		app.addDirectory("data/bikes/");
-		app.addDirectory("data/boat/");
+//		app.addDirectory("data/boat/"); // Comment out for color
 		app.addDirectory("data/graf/");
 		app.addDirectory("data/leuven/");
 		app.addDirectory("data/ubc/");
@@ -330,7 +330,7 @@ public class BenchmarkFeatureDescribeStability {
 //		app.evaluate("BOOFCV_SIFT1.txt");
 //		app.evaluate("OpenIMAJ_SIFT.txt");
 //		app.evaluate("VLFeat_SIFT.txt");
-		app.evaluate("BOOFCV_SIFTN.txt");
+//		app.evaluate("BOOFCV_SIFTN.txt");
 //		app.evaluate("OpenSIFT.txt");
 //		app.evaluate("SIFT_REFERENCE.txt");
 
@@ -342,6 +342,7 @@ public class BenchmarkFeatureDescribeStability {
 //		app.evaluate("OpenCV_SURF.txt");
 //		app.evaluate("BoofCV_SURF.txt");
 //		app.evaluate("BoofCV_MSURF.txt");
+		app.evaluate("BoofCV_MSURF_COLOR.txt");
 
 	}
 }

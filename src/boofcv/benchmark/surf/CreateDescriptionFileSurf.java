@@ -22,6 +22,7 @@ package boofcv.benchmark.surf;
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.benchmark.homography.CreateDescriptionFile;
 import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
 
@@ -32,29 +33,45 @@ import java.io.FileNotFoundException;
  */
 public class CreateDescriptionFileSurf {
 	public static <T extends ImageSingleBand>
-	void doStuff( String directory , String imageSuffix , Class<T> imageType ) throws FileNotFoundException {
+	void doStuff( String directory , String imageSuffix , ImageDataType<T> imageType ) throws FileNotFoundException {
 		DescribeRegionPoint<T,SurfFeature> alg;
 		CreateDescriptionFile<T,SurfFeature> cdf;
 
-		alg = FactorySurf.surf(true, imageType);
-		cdf = new CreateDescriptionFile<T,SurfFeature>(alg,imageType,"BoofCV_MSURF");
-		cdf.directory(directory,imageSuffix,"SURF.txt");
+		String suffix = imageType.getFamily() == ImageDataType.Family.SINGLE_BAND ? "" : "_COLOR";
 
-		alg = FactorySurf.surf(false, imageType);
-		cdf = new CreateDescriptionFile<T,SurfFeature>(alg,imageType,"BoofCV_SURF");
-		cdf.directory(directory,imageSuffix,"SURF.txt");
+		alg = FactorySurf.surf(true, imageType);
+		cdf = new CreateDescriptionFile<T,SurfFeature>(alg,imageType,"BoofCV_MSURF"+suffix);
+		cdf.directory(directory,imageSuffix,"SURF_COMMON.txt");
+
+//		alg = FactorySurf.surf(false, imageType);
+//		cdf = new CreateDescriptionFile<T,SurfFeature>(alg,imageType,"BoofCV_SURF"+suffix);
+//		cdf.directory(directory,imageSuffix,"SURF_COMMON.txt");
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {
-		Class type = ImageFloat32.class;
+//		ImageDataType type = ImageDataType.single(ImageFloat32.class);
+		ImageDataType type = ImageDataType.ms(3,ImageFloat32.class);
 
-		doStuff("data/bikes/",".png",type);
-		doStuff("data/boat/",".png",type);
-		doStuff("data/graf/",".png",type);
-		doStuff("data/leuven/",".png",type);
-		doStuff("data/ubc/",".png",type);
-		doStuff("data/trees/",".png",type);
-		doStuff("data/wall/",".png",type);
-		doStuff("data/bark/",".png",type);
+		boolean gray = type.getFamily() == ImageDataType.Family.SINGLE_BAND;
+
+		if( gray ) {
+			doStuff("data/bikes/",".png",type);
+			doStuff("data/boat/",".png",type);
+			doStuff("data/graf/",".png",type);
+			doStuff("data/leuven/",".png",type);
+			doStuff("data/ubc/",".png",type);
+			doStuff("data/trees/",".png",type);
+			doStuff("data/wall/",".png",type);
+			doStuff("data/bark/",".png",type);
+		} else {
+			doStuff("data/bikes/",".png",type);
+//			doStuff("data/boat/",".png",type);
+			doStuff("data/graf/",".png",type);
+			doStuff("data/leuven/",".png",type);
+			doStuff("data/ubc/",".png",type);
+			doStuff("data/trees/",".png",type);
+			doStuff("data/wall/",".png",type);
+			doStuff("data/bark/",".png",type);
+		}
 	}
 }

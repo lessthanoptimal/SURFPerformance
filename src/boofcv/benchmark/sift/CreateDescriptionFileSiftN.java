@@ -21,6 +21,7 @@ package boofcv.benchmark.sift;
 
 import boofcv.benchmark.homography.CreateDescriptionFile;
 import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
 
 import java.io.FileNotFoundException;
@@ -37,7 +38,7 @@ public class CreateDescriptionFileSiftN extends CreateDescriptionFile<ImageFloat
 	 * @param descriptionName The name of the description algorithm.  This name is appended to output files.
 	 */
 	public CreateDescriptionFileSiftN(String descriptionName) {
-		super(FactorySift.createDescriptor(), ImageFloat32.class, descriptionName);
+		super(FactorySift.createDescriptor(), ImageDataType.single(ImageFloat32.class), descriptionName);
 	}
 
 	@Override

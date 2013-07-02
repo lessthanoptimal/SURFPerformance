@@ -22,6 +22,7 @@ package boofcv.benchmark.sift;
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.benchmark.homography.CreateDescriptionFile;
 import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
 
 import java.io.FileNotFoundException;
@@ -36,7 +37,7 @@ public class CreateDescriptionFileSift {
 				FactorySift.createDescriptor();
 
 		CreateDescriptionFile<ImageFloat32,SurfFeature> cdf =
-				new CreateDescriptionFile<ImageFloat32,SurfFeature>(alg,ImageFloat32.class,"BOOFCV_SIFT1");
+				new CreateDescriptionFile<ImageFloat32,SurfFeature>(alg, ImageDataType.single(ImageFloat32.class),"BOOFCV_SIFT1");
 
 		cdf.directory(directory,imageSuffix,"OpenIMAJ_SIFT.txt");
 	}

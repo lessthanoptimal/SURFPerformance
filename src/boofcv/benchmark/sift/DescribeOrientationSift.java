@@ -25,6 +25,7 @@ import boofcv.alg.feature.detect.interest.SiftImageScaleSpace;
 import boofcv.alg.feature.orientation.OrientationHistogramSift;
 import boofcv.struct.GrowQueue_F64;
 import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
 
 import java.util.ArrayList;
@@ -66,19 +67,7 @@ public class DescribeOrientationSift
 	}
 
 	@Override
-	public int getDescriptionLength() {
-		return describe.getDescriptorLength();
-	}
-
-	@Override
-	public boolean isInBounds(double x, double y, double orientation, double scale) {
-		return true;
-	}
-
-	@Override
-	public SurfFeature process(double x, double y, double angle, double scale, SurfFeature ret) {
-		if( ret == null )
-			ret = createDescription();
+	public boolean process(double x, double y, double angle, double scale, SurfFeature ret) {
 
 		orientation.process(x,y,scale);
 
@@ -87,7 +76,7 @@ public class DescribeOrientationSift
 				orientation.getImageIndex(),orientation.getPixelScale(), ret);
 
 //		describe.process(x,y,scale,-angle, ret);
-		return ret;
+		return true;
 	}
 
 	public List<SurfFeature> process( double x , double y , double scale ) {
@@ -120,6 +109,11 @@ public class DescribeOrientationSift
 	@Override
 	public boolean requiresOrientation() {
 		return false;
+	}
+
+	@Override
+	public ImageDataType<ImageFloat32> getImageType() {
+		return null;
 	}
 
 	@Override

@@ -23,7 +23,8 @@ import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.core.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.feature.TupleDesc_F64;
-import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageBase;
+import boofcv.struct.image.ImageDataType;
 import georegression.struct.point.Point2D_F64;
 
 import java.awt.image.BufferedImage;
@@ -41,13 +42,13 @@ import java.util.List;
  *
  * @author Peter Abeles
  */
-public class CreateDescriptionFile<T extends ImageSingleBand, D extends TupleDesc_F64> {
+public class CreateDescriptionFile<T extends ImageBase, D extends TupleDesc_F64> {
 
 	// algorithm that describes the features
 	protected DescribeRegionPoint<T,D> describe;
 
 	// type of input image
-	Class<T> imageType;
+	ImageDataType<T> imageType;
 	// name of the description
 	String descriptionName;
 
@@ -59,7 +60,7 @@ public class CreateDescriptionFile<T extends ImageSingleBand, D extends TupleDes
 	 * @param descriptionName The name of the description algorithm.  This name is appended to output files.
 	 */
 	public CreateDescriptionFile(DescribeRegionPoint<T,D> describe,
-								 Class<T> imageType,
+								 ImageDataType<T> imageType,
 								 String descriptionName ) {
 		this.describe = describe;
 		this.imageType = imageType;
@@ -96,7 +97,7 @@ public class CreateDescriptionFile<T extends ImageSingleBand, D extends TupleDes
 
 			File detectionFile = new File(directoryPath+"/DETECTED_"+imageName+"_"+detectionSuffix);
 			if( !detectionFile.exists() )
-				throw new RuntimeException("Detection file does not exist");
+				throw new RuntimeException("Detection file does not exist: "+detectionFile.getName());
 
 			BufferedImage image = UtilImageIO.loadImage(f.getPath());
 			process(image,detectionFile.getPath(),directoryPath+"/DESCRIBE_"+imageName+"_"+descriptionName+".txt");
@@ -114,7 +115,8 @@ public class CreateDescriptionFile<T extends ImageSingleBand, D extends TupleDes
 	 * @throws FileNotFoundException
 	 */
 	public void process( BufferedImage input , String detectionName , String outputName ) throws FileNotFoundException {
-		T image = ConvertBufferedImage.convertFromSingle(input,null,imageType);
+		T image = imageType.createImage(input.getWidth(),input.getHeight());
+		ConvertBufferedImage.convertFrom(input, image);
 
 		describe.setImage(image);
 
@@ -123,7 +125,7 @@ public class CreateDescriptionFile<T extends ImageSingleBand, D extends TupleDes
 		FileOutputStream fos = new FileOutputStream(outputName);
 		PrintStream out = new PrintStream(fos);
 
-		out.printf("%d\n", describe.getDescriptionLength());
+		out.printf("%d\n", describe.createDescription().size());
 		for( DetectionInfo d : detections  ) {
 			Point2D_F64 p = d.location;
 			List<Description> descList = process(p.x, p.y, d.yaw, d.scale);
@@ -144,9 +146,8 @@ public class CreateDescriptionFile<T extends ImageSingleBand, D extends TupleDes
 	{
 		List<Description> ret = new ArrayList<Description>();
 
-		D found = describe.process(x,y,theta,scale,null);
-
-		if( found != null ) {
+		D found = describe.createDescription();
+		if( describe.process(x,y,theta,scale,found) ) {
 			Description d = new Description();
 			d.x = x;
 			d.y = y;

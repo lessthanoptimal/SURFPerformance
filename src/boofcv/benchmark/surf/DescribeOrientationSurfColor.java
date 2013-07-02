@@ -21,45 +21,58 @@ package boofcv.benchmark.surf;
 
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.abst.feature.orientation.OrientationIntegral;
-import boofcv.alg.feature.describe.DescribePointSurf;
+import boofcv.alg.feature.describe.DescribePointSurfMultiSpectral;
 import boofcv.alg.transform.ii.GIntegralImageOps;
+import boofcv.core.image.GConvertImage;
+import boofcv.core.image.GeneralizedImageOps;
 import boofcv.struct.feature.SurfFeature;
 import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.MultiSpectral;
 
 /**
  * Adds orientation estimation to SURF description calculation.
  *
  * @author Peter Abeles
  */
-public class DescribeOrientationSurf<T extends ImageSingleBand, II extends ImageSingleBand>
-		implements DescribeRegionPoint<T,SurfFeature>
+public class DescribeOrientationSurfColor<T extends ImageSingleBand, II extends ImageSingleBand>
+		implements DescribeRegionPoint<MultiSpectral<T>,SurfFeature>
 {
 	private OrientationIntegral<II> orientation;
-	private DescribePointSurf<II> describe;
+	private DescribePointSurfMultiSpectral<II> describe;
 
-	// storage for integral image
-	private II ii;
+	T gray;
+	II grayII;
+	MultiSpectral<II> bandII;
 
-	ImageDataType<T> imageType;
+	ImageDataType<MultiSpectral<T>> imageType;
 
-	public DescribeOrientationSurf(OrientationIntegral<II> orientation,
-								   DescribePointSurf<II> describe) {
+	public DescribeOrientationSurfColor(OrientationIntegral<II> orientation,
+										DescribePointSurfMultiSpectral<II> describe,
+										Class<T> imageType, Class<II> integralType ) {
 		this.orientation = orientation;
 		this.describe = describe;
-//		this.imageType = ImageDataType.single(imageType);
+
+		gray = GeneralizedImageOps.createSingleBand(imageType, 1, 1);
+		grayII = GeneralizedImageOps.createSingleBand(integralType,1,1);
+		bandII = new MultiSpectral<II>(integralType,1,1,describe.getNumBands());
+
+		this.imageType = ImageDataType.ms(describe.getNumBands(), imageType);
 	}
 
 	@Override
-	public void setImage(T image) {
-		if( ii != null ) {
-			ii.reshape(image.width,image.height);
-		}
+	public void setImage(MultiSpectral<T> image) {
+		gray.reshape(image.width,image.height);
+		grayII.reshape(image.width,image.height);
+		bandII.reshape(image.width,image.height);
 
-		// compute integral image
-		ii = GIntegralImageOps.transform(image, ii);
-		orientation.setImage(ii);
-		describe.setImage(ii);
+		GConvertImage.average(image, gray);
+		GIntegralImageOps.transform(gray, grayII);
+		for( int i = 0; i < image.getNumBands(); i++)
+			GIntegralImageOps.transform(image.getBand(i), bandII.getBand(i));
+
+		orientation.setImage(grayII);
+		describe.setImage(grayII,bandII);
 	}
 
 	@Override
@@ -88,7 +101,7 @@ public class DescribeOrientationSurf<T extends ImageSingleBand, II extends Image
 	}
 
 	@Override
-	public ImageDataType<T> getImageType() {
+	public ImageDataType<MultiSpectral<T>> getImageType() {
 		return imageType;
 	}
 

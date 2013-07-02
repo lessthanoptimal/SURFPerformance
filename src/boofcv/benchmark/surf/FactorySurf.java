@@ -26,11 +26,14 @@ import boofcv.abst.feature.detect.interest.ConfigFastHessian;
 import boofcv.abst.feature.orientation.ConfigSlidingIntegral;
 import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.alg.feature.describe.DescribePointSurf;
+import boofcv.alg.feature.describe.DescribePointSurfMultiSpectral;
 import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.factory.feature.describe.FactoryDescribePointAlgs;
 import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.struct.feature.SurfFeature;
+import boofcv.struct.image.ImageBase;
+import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageSingleBand;
 
 /**
@@ -51,16 +54,17 @@ public class FactorySurf {
 					sliding_ii(new ConfigSlidingIntegral(0.65, Math.PI / 3.0, 8, -1, 6), integralType);
 
 		DescribePointSurf<II> alg = new DescribePointSurfPanOMatic<II>(integralType);
-		return new WrapDescribeSurf<T,II>( alg );
+		return new WrapDescribeSurf<T,II>( alg , imageType );
 	}
 
 	/**
 	 * Creates a BoofCV SURF descriptor
 	 */
-	public static <T extends ImageSingleBand, II extends ImageSingleBand>
-	DescribeRegionPoint<T,SurfFeature> surf( boolean stable , Class<T> imageType )
+	public static <T extends ImageBase, II extends ImageSingleBand>
+	DescribeRegionPoint<T,SurfFeature> surf( boolean stable , ImageDataType<T> imageType )
 	{
-		Class integralType = GIntegralImageOps.getIntegralType(imageType);
+		Class bandType = imageType.getDataType().getImageClass();
+		Class integralType = GIntegralImageOps.getIntegralType(bandType);
 
 		DescribePointSurf<II> describe;
 		OrientationIntegral<II> orientation;
@@ -75,11 +79,16 @@ public class FactorySurf {
 			describe = FactoryDescribePointAlgs.surfSpeed(null,integralType);
 		}
 
-		return new DescribeOrientationSurf<T,II>(orientation,describe);
+		if( ImageDataType.Family.SINGLE_BAND == imageType.getFamily() )
+			return new DescribeOrientationSurf(orientation,describe);
+		else {
+			DescribePointSurfMultiSpectral descColor = new DescribePointSurfMultiSpectral(describe,3);
+			return new DescribeOrientationSurfColor(orientation,descColor,bandType,integralType);
+		}
 	}
 
-	public static <T extends ImageSingleBand, II extends ImageSingleBand>
-	DetectDescribePoint<T,SurfFeature> detectDescribe( boolean stable , Class<T> imageType) {
+	public static <T extends ImageSingleBand>
+	DetectDescribePoint<T,SurfFeature> detectDescribe( boolean stable , ImageDataType imageType ) {
 
 		ConfigFastHessian configDetect = new ConfigFastHessian(3, 58, -1,1, 9, 4, 4);
 
