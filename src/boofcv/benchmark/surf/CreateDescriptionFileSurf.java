@@ -22,9 +22,9 @@ package boofcv.benchmark.surf;
 import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.benchmark.homography.CreateDescriptionFile;
 import boofcv.struct.feature.SurfFeature;
-import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageType;
 
 import java.io.FileNotFoundException;
 
@@ -33,11 +33,11 @@ import java.io.FileNotFoundException;
  */
 public class CreateDescriptionFileSurf {
 	public static <T extends ImageSingleBand>
-	void doStuff( String directory , String imageSuffix , ImageDataType<T> imageType ) throws FileNotFoundException {
+	void doStuff( String directory , String imageSuffix , ImageType<T> imageType ) throws FileNotFoundException {
 		DescribeRegionPoint<T,SurfFeature> alg;
 		CreateDescriptionFile<T,SurfFeature> cdf;
 
-		String suffix = imageType.getFamily() == ImageDataType.Family.SINGLE_BAND ? "" : "_COLOR";
+		String suffix = imageType.getFamily() == ImageType.Family.SINGLE_BAND ? "" : "_COLOR";
 
 		alg = FactorySurf.surf(true, imageType);
 		cdf = new CreateDescriptionFile<T,SurfFeature>(alg,imageType,"BoofCV_MSURF"+suffix);
@@ -49,10 +49,10 @@ public class CreateDescriptionFileSurf {
 	}
 
 	public static void main( String args[] ) throws FileNotFoundException {
-//		ImageDataType type = ImageDataType.single(ImageFloat32.class);
-		ImageDataType type = ImageDataType.ms(3,ImageFloat32.class);
+//		ImageType type = ImageType.single(ImageFloat32.class);
+		ImageType type = ImageType.ms(3,ImageFloat32.class);
 
-		boolean gray = type.getFamily() == ImageDataType.Family.SINGLE_BAND;
+		boolean gray = type.getFamily() == ImageType.Family.SINGLE_BAND;
 
 		if( gray ) {
 			doStuff("data/bikes/",".png",type);

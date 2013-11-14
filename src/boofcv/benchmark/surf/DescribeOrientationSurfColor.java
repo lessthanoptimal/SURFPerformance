@@ -26,8 +26,8 @@ import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.core.image.GConvertImage;
 import boofcv.core.image.GeneralizedImageOps;
 import boofcv.struct.feature.SurfFeature;
-import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageType;
 import boofcv.struct.image.MultiSpectral;
 
 /**
@@ -45,7 +45,7 @@ public class DescribeOrientationSurfColor<T extends ImageSingleBand, II extends 
 	II grayII;
 	MultiSpectral<II> bandII;
 
-	ImageDataType<MultiSpectral<T>> imageType;
+	ImageType<MultiSpectral<T>> imageType;
 
 	public DescribeOrientationSurfColor(OrientationIntegral<II> orientation,
 										DescribePointSurfMultiSpectral<II> describe,
@@ -57,7 +57,7 @@ public class DescribeOrientationSurfColor<T extends ImageSingleBand, II extends 
 		grayII = GeneralizedImageOps.createSingleBand(integralType,1,1);
 		bandII = new MultiSpectral<II>(integralType,1,1,describe.getNumBands());
 
-		this.imageType = ImageDataType.ms(describe.getNumBands(), imageType);
+		this.imageType = ImageType.ms(describe.getNumBands(), imageType);
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class DescribeOrientationSurfColor<T extends ImageSingleBand, II extends 
 	}
 
 	@Override
-	public ImageDataType<MultiSpectral<T>> getImageType() {
+	public ImageType<MultiSpectral<T>> getImageType() {
 		return imageType;
 	}
 

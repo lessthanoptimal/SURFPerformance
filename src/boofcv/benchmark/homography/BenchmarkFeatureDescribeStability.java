@@ -23,13 +23,13 @@ import boofcv.abst.feature.associate.AssociateDescription;
 import boofcv.abst.feature.associate.ScoreAssociateEuclideanSq_F64;
 import boofcv.abst.feature.associate.ScoreAssociation;
 import boofcv.factory.feature.associate.FactoryAssociation;
-import boofcv.struct.FastQueue;
 import boofcv.struct.feature.AssociatedIndex;
 import boofcv.struct.feature.TupleDesc_F64;
 import georegression.geometry.UtilPoint2D_F64;
 import georegression.struct.homo.Homography2D_F64;
 import georegression.struct.point.Point2D_F64;
 import georegression.transform.homo.HomographyPointOps_F64;
+import org.ddogleg.struct.FastQueue;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -318,7 +318,7 @@ public class BenchmarkFeatureDescribeStability {
 		BenchmarkFeatureDescribeStability app = new BenchmarkFeatureDescribeStability(assoc,".png",tolerance);
 
 		app.addDirectory("data/bikes/");
-//		app.addDirectory("data/boat/"); // Comment out for color
+		app.addDirectory("data/boat/"); // Comment out for color
 		app.addDirectory("data/graf/");
 		app.addDirectory("data/leuven/");
 		app.addDirectory("data/ubc/");
@@ -330,7 +330,7 @@ public class BenchmarkFeatureDescribeStability {
 //		app.evaluate("BOOFCV_SIFT1.txt");
 //		app.evaluate("OpenIMAJ_SIFT.txt");
 //		app.evaluate("VLFeat_SIFT.txt");
-//		app.evaluate("BOOFCV_SIFTN.txt");
+		app.evaluate("BOOFCV_SIFTN.txt");
 //		app.evaluate("OpenSIFT.txt");
 //		app.evaluate("SIFT_REFERENCE.txt");
 
@@ -342,7 +342,7 @@ public class BenchmarkFeatureDescribeStability {
 //		app.evaluate("OpenCV_SURF.txt");
 //		app.evaluate("BoofCV_SURF.txt");
 //		app.evaluate("BoofCV_MSURF.txt");
-		app.evaluate("BoofCV_MSURF_COLOR.txt");
+//		app.evaluate("BoofCV_MSURF_COLOR.txt");
 
 	}
 }

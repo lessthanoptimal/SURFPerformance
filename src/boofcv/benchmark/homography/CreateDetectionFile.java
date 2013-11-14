@@ -21,15 +21,9 @@ package boofcv.benchmark.homography;
 
 import boofcv.abst.feature.detect.interest.InterestPointDetector;
 import boofcv.abst.feature.orientation.OrientationImage;
-import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.core.image.ConvertBufferedImage;
-import boofcv.factory.feature.detect.interest.FactoryInterestPoint;
-import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageFloat32;
 import boofcv.struct.image.ImageSingleBand;
-import boofcv.struct.image.ImageUInt8;
 import georegression.struct.point.Point2D_F64;
 
 import java.awt.image.BufferedImage;
@@ -123,6 +117,10 @@ public class CreateDetectionFile<T extends ImageSingleBand> {
 
 		for( int i = 0; i < alg.getNumberOfFeatures(); i++ ) {
 			Point2D_F64 pt = alg.getLocation(i);
+
+			if( Double.isNaN(pt.x) || Double.isNaN(pt.y))
+				throw new IllegalArgumentException("NaN detected in location");
+
 			double scale = alg.getScale(i);
 			double yaw = 0;
 			if( orientation != null ) {

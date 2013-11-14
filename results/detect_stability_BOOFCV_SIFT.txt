@@ -1,0 +1,39 @@
+tolerance = 1.5
+scaleTolerance = 0.25
+
+---------- Directory: data/bikes/
+img2 img3 img4 img5 img6 
+1411 1428 1406 1405 1404 
+0.7137 0.6408 0.4886 0.3758 0.1652 
+---------- Directory: data/boat/
+img2 img3 img4 img5 img6 
+1611 1614 1638 1639 1643 
+0.4035 0.2788 0.1172 0.0586 0.0158 
+---------- Directory: data/graf/
+img2 img3 img4 img5 img6 
+1060 1110 1072 1030 1063 
+0.3566 0.1730 0.0830 0.0398 0.0151 
+---------- Directory: data/leuven/
+img2 img3 img4 img5 img6 
+960 960 953 961 951 
+0.6938 0.5865 0.4764 0.3694 0.3070 
+---------- Directory: data/ubc/
+img2 img3 img4 img5 img6 
+1246 1243 1243 1243 1248 
+0.8852 0.8045 0.6653 0.4425 0.2676 
+---------- Directory: data/trees/
+img2 img3 img4 img5 img6 
+2602 2626 2619 2637 2606 
+0.3474 0.2346 0.1394 0.1597 0.1040 
+---------- Directory: data/wall/
+img2 img3 img4 img5 img6 
+2584 2513 2354 2333 2211 
+0.3928 0.4469 0.2205 0.1213 0.0565 
+---------- Directory: data/bark/
+img2 img3 img4 img5 img6 
+1313 1248 1519 1520 1522 
+0.2856 0.1138 0.1139 0.0875 0.0447 
+Summary Score:
+   num matches     = 63749
+   total correct   = 12.292133786488943
+   total ambiguous = 0.20459736964147276

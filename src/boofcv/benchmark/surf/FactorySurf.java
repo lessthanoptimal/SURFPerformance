@@ -33,8 +33,8 @@ import boofcv.factory.feature.detdesc.FactoryDetectDescribe;
 import boofcv.factory.feature.orientation.FactoryOrientationAlgs;
 import boofcv.struct.feature.SurfFeature;
 import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageType;
 
 /**
  * @author Peter Abeles
@@ -61,9 +61,9 @@ public class FactorySurf {
 	 * Creates a BoofCV SURF descriptor
 	 */
 	public static <T extends ImageBase, II extends ImageSingleBand>
-	DescribeRegionPoint<T,SurfFeature> surf( boolean stable , ImageDataType<T> imageType )
+	DescribeRegionPoint<T,SurfFeature> surf( boolean stable , ImageType<T> imageType )
 	{
-		Class bandType = imageType.getDataType().getImageClass();
+		Class bandType = imageType.getDataType().getDataType();
 		Class integralType = GIntegralImageOps.getIntegralType(bandType);
 
 		DescribePointSurf<II> describe;
@@ -79,7 +79,7 @@ public class FactorySurf {
 			describe = FactoryDescribePointAlgs.surfSpeed(null,integralType);
 		}
 
-		if( ImageDataType.Family.SINGLE_BAND == imageType.getFamily() )
+		if( ImageType.Family.SINGLE_BAND == imageType.getFamily() )
 			return new DescribeOrientationSurf(orientation,describe);
 		else {
 			DescribePointSurfMultiSpectral descColor = new DescribePointSurfMultiSpectral(describe,3);
@@ -88,7 +88,7 @@ public class FactorySurf {
 	}
 
 	public static <T extends ImageSingleBand>
-	DetectDescribePoint<T,SurfFeature> detectDescribe( boolean stable , ImageDataType imageType ) {
+	DetectDescribePoint<T,SurfFeature> detectDescribe( boolean stable , ImageType imageType ) {
 
 		ConfigFastHessian configDetect = new ConfigFastHessian(3, 58, -1,1, 9, 4, 4);
 

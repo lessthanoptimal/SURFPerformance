@@ -26,9 +26,9 @@ import boofcv.factory.feature.associate.FactoryAssociation;
 import boofcv.gui.feature.AssociationPanel;
 import boofcv.gui.image.ShowImages;
 import boofcv.io.image.UtilImageIO;
-import boofcv.struct.FastQueue;
 import boofcv.struct.feature.TupleDesc_F64;
 import georegression.struct.point.Point2D_F64;
+import org.ddogleg.struct.FastQueue;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

@@ -23,10 +23,10 @@ import boofcv.abst.feature.describe.DescribeRegionPoint;
 import boofcv.alg.feature.describe.DescribePointSift;
 import boofcv.alg.feature.detect.interest.SiftImageScaleSpace;
 import boofcv.alg.feature.orientation.OrientationHistogramSift;
-import boofcv.struct.GrowQueue_F64;
 import boofcv.struct.feature.SurfFeature;
-import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.ImageType;
+import org.ddogleg.struct.GrowQueue_F64;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,7 +112,7 @@ public class DescribeOrientationSift
 	}
 
 	@Override
-	public ImageDataType<ImageFloat32> getImageType() {
+	public ImageType<ImageFloat32> getImageType() {
 		return null;
 	}
 

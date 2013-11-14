@@ -2,8 +2,8 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../bubo/io/trunk">
-      <sourceFolder url="file://$MODULE_DIR$/../bubo/io/trunk/src" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/../bubo/io">
+      <sourceFolder url="file://$MODULE_DIR$/../bubo/io/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -11,15 +11,6 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/GeoRegression.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/libpja.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

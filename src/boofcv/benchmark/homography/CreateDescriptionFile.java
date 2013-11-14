@@ -24,7 +24,7 @@ import boofcv.core.image.ConvertBufferedImage;
 import boofcv.io.image.UtilImageIO;
 import boofcv.struct.feature.TupleDesc_F64;
 import boofcv.struct.image.ImageBase;
-import boofcv.struct.image.ImageDataType;
+import boofcv.struct.image.ImageType;
 import georegression.struct.point.Point2D_F64;
 
 import java.awt.image.BufferedImage;
@@ -48,7 +48,7 @@ public class CreateDescriptionFile<T extends ImageBase, D extends TupleDesc_F64>
 	protected DescribeRegionPoint<T,D> describe;
 
 	// type of input image
-	ImageDataType<T> imageType;
+   ImageType<T> imageType;
 	// name of the description
 	String descriptionName;
 
@@ -60,7 +60,7 @@ public class CreateDescriptionFile<T extends ImageBase, D extends TupleDesc_F64>
 	 * @param descriptionName The name of the description algorithm.  This name is appended to output files.
 	 */
 	public CreateDescriptionFile(DescribeRegionPoint<T,D> describe,
-								 ImageDataType<T> imageType,
+                                ImageType<T> imageType,
 								 String descriptionName ) {
 		this.describe = describe;
 		this.imageType = imageType;
@@ -116,7 +116,7 @@ public class CreateDescriptionFile<T extends ImageBase, D extends TupleDesc_F64>
 	 */
 	public void process( BufferedImage input , String detectionName , String outputName ) throws FileNotFoundException {
 		T image = imageType.createImage(input.getWidth(),input.getHeight());
-		ConvertBufferedImage.convertFrom(input, image);
+		ConvertBufferedImage.convertFrom(input, image,true);
 
 		describe.setImage(image);
 
@@ -134,6 +134,8 @@ public class CreateDescriptionFile<T extends ImageBase, D extends TupleDesc_F64>
 				out.printf("%.3f %.3f %f",result.x,result.y,result.yaw);
 				D desc = result.desc;
 				for( int i = 0; i < desc.value.length; i++ ) {
+					if( Double.isNaN(desc.value[i]))
+						throw new IllegalArgumentException("NaN detected in description");
 					out.printf(" %.10f",desc.value[i]);
 				}
 				out.println();

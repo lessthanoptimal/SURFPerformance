@@ -120,11 +120,17 @@ public class CreateDetectDescribeFile<T extends ImageSingleBand, D extends Tuple
 			Point2D_F64 pt = alg.getLocation(i);
 			double scale = alg.getScale(i);
 			double yaw = alg.getOrientation(i);
+
+			if( Double.isNaN(pt.x) || Double.isNaN(pt.y))
+				throw new IllegalArgumentException("NaN detected in location");
+
 			outDetect.printf("%.3f %.3f %.5f %.5f\n", pt.getX(), pt.getY(), scale, yaw);
 
 			desc = alg.getDescription(i);
 			outDescribe.printf("%.3f %.3f %f",pt.getX(), pt.getY(),yaw);
 			for( int j = 0; j < desc.value.length; j++ ) {
+				if( Double.isNaN(desc.value[j]))
+					throw new IllegalArgumentException("NaN detected in description");
 				outDescribe.printf(" %.10f",desc.value[j]);
 			}
 			outDescribe.println();

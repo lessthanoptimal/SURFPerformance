@@ -24,8 +24,8 @@ import boofcv.abst.feature.orientation.OrientationIntegral;
 import boofcv.alg.feature.describe.DescribePointSurf;
 import boofcv.alg.transform.ii.GIntegralImageOps;
 import boofcv.struct.feature.SurfFeature;
-import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageSingleBand;
+import boofcv.struct.image.ImageType;
 
 /**
  * Adds orientation estimation to SURF description calculation.
@@ -41,7 +41,7 @@ public class DescribeOrientationSurf<T extends ImageSingleBand, II extends Image
 	// storage for integral image
 	private II ii;
 
-	ImageDataType<T> imageType;
+	ImageType<T> imageType;
 
 	public DescribeOrientationSurf(OrientationIntegral<II> orientation,
 								   DescribePointSurf<II> describe) {
@@ -88,7 +88,7 @@ public class DescribeOrientationSurf<T extends ImageSingleBand, II extends Image
 	}
 
 	@Override
-	public ImageDataType<T> getImageType() {
+	public ImageType<T> getImageType() {
 		return imageType;
 	}
 

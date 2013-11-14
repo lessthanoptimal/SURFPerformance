@@ -22,8 +22,8 @@ package boofcv.benchmark.surf;
 import boofcv.abst.feature.detdesc.DetectDescribePoint;
 import boofcv.benchmark.homography.BenchmarkFeatureAllRuntime;
 import boofcv.struct.feature.SurfFeature;
-import boofcv.struct.image.ImageDataType;
 import boofcv.struct.image.ImageFloat32;
+import boofcv.struct.image.ImageType;
 
 import java.io.IOException;
 
@@ -35,7 +35,7 @@ public class BenchmarkRuntimeAllSurf {
 	public static void main( String args[] ) throws IOException {
 
 		DetectDescribePoint<ImageFloat32,SurfFeature>
-				alg = FactorySurf.detectDescribe(true, ImageDataType.single(ImageFloat32.class));
+				alg = FactorySurf.detectDescribe(true, ImageType.single(ImageFloat32.class));
 
 		BenchmarkFeatureAllRuntime<ImageFloat32,SurfFeature> benchmark =
 				new BenchmarkFeatureAllRuntime<ImageFloat32,SurfFeature>(ImageFloat32.class,alg);
